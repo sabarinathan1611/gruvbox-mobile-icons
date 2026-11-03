@@ -86,6 +86,20 @@ iconpack/       Android project (package com.sabari.gruvboxclean)
 docs/           guides
 ```
 
+## Licence
+
+Copyright © 2026 sabarinathan1611.
+
+| Part | Licence |
+|---|---|
+| **Code**: `scripts/`, `iconpack/` (Gradle, Java, XML) | [Apache License 2.0](LICENSE) |
+| **Artwork**: icons, wallpapers, previews, and the glyph designs in `scripts/glyphs.py` | [CC BY-NC-SA 4.0](LICENSE-ARTWORK) |
+
+You're welcome to use, share and remix the icons and wallpapers **for non-commercial use**,
+with credit ("Gruvbox Clean by sabarinathan1611") and under the same licence.
+Selling the icons or wallpapers, or including them in a paid product, is not allowed without
+permission. Contributions are accepted under the terms in [CONTRIBUTING](docs/CONTRIBUTING.md#licence-of-contributions).
+
 ## Credits
 
 Colour palette: [Gruvbox](https://github.com/morhetz/gruvbox) by Pavel Pertsev (MIT licence).

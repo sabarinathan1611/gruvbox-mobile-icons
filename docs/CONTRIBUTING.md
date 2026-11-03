@@ -47,6 +47,21 @@ Open an issue titled `Icon request: <App name>` with:
 - raw adb dumps (`mapping/raw_query.txt`, `mapping/*.tmp`), which list every app on your phone
 - build output, `local.properties`, keystores or passwords
 
+## Licence of contributions
+
+By opening a pull request you agree that:
+
+1. Your contribution is your own original work, and doesn't copy or trace any brand logo,
+   stock image or other copyrighted artwork.
+2. Code you contribute is licensed under the **Apache License 2.0** ([LICENSE](../LICENSE)).
+3. Artwork you contribute (glyphs, icons, wallpapers) is licensed under **CC BY-NC-SA 4.0**
+   ([LICENSE-ARTWORK](../LICENSE-ARTWORK)).
+4. You also grant the project maintainer (sabarinathan1611) a perpetual, worldwide,
+   non-exclusive, royalty-free, irrevocable licence to use, modify, distribute and **sell** your
+   contribution as part of any edition of Gruvbox Clean, including paid editions.
+
+You keep the copyright to your work; this only lets the pack ship it in every edition.
+
 ## Other changes
 
 Wallpapers live in `scripts/make_wallpapers.py`, and the palette in `scripts/palette.py`.
