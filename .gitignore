@@ -1,0 +1,16 @@
+# Python
+.venv/
+__pycache__/
+
+# Raw adb dumps (full list of installed packages: personal, never commit)
+mapping/raw_query.txt
+mapping/*.tmp
+
+# Android / Gradle build output
+iconpack/.gradle/
+iconpack/build/
+iconpack/app/build/
+iconpack/local.properties
+*.apk
+*.keystore
+*.jks

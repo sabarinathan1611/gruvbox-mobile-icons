@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 24 24">
+  <path d="M5.28 0 H18.72 A5.28 5.28 0 0 1 24 5.28 V18.72 A5.28 5.28 0 0 1 18.72 24 H5.28 A5.28 5.28 0 0 1 0 18.72 V5.28 A5.28 5.28 0 0 1 5.28 0 Z" fill="#3c3836"/>
+  <g transform="translate(5.5 5.5) scale(0.541667)" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M7 2.5 H17 A2.5 2.5 0 0 1 19.5 5 V19 A2.5 2.5 0 0 1 17 21.5 H7 A2.5 2.5 0 0 1 4.5 19 V5 A2.5 2.5 0 0 1 7 2.5 Z" stroke="#ebdbb2"/>
+    <path d="M8 6.5 H16" stroke="#ebdbb2"/>
+    <path d="M7.45 11.5 a1.05 1.05 0 1 0 2.1 0 a1.05 1.05 0 1 0 -2.1 0 Z" fill="#ebdbb2"/>
+    <path d="M10.95 11.5 a1.05 1.05 0 1 0 2.1 0 a1.05 1.05 0 1 0 -2.1 0 Z" fill="#ebdbb2"/>
+    <path d="M14.45 11.5 a1.05 1.05 0 1 0 2.1 0 a1.05 1.05 0 1 0 -2.1 0 Z" fill="#ebdbb2"/>
+    <path d="M7.45 14.75 a1.05 1.05 0 1 0 2.1 0 a1.05 1.05 0 1 0 -2.1 0 Z" fill="#ebdbb2"/>
+    <path d="M10.95 14.75 a1.05 1.05 0 1 0 2.1 0 a1.05 1.05 0 1 0 -2.1 0 Z" fill="#ebdbb2"/>
+    <path d="M7.45 18 a1.05 1.05 0 1 0 2.1 0 a1.05 1.05 0 1 0 -2.1 0 Z" fill="#ebdbb2"/>
+    <path d="M10.95 18 a1.05 1.05 0 1 0 2.1 0 a1.05 1.05 0 1 0 -2.1 0 Z" fill="#ebdbb2"/>
+    <path d="M15.5 14.75 V18" stroke="#fe8019"/>
+  </g>
+</svg>

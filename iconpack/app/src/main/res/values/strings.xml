@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Gruvbox Clean</string>
+    <string name="theme_title">Gruvbox Clean</string>
+    <string name="theme_description">Flat Gruvbox icons with an orange accent.</string>
+    <string name="theme_author">Sabari</string>
+    <string name="search_hint">Search icons</string>
+    <string name="how_to_apply">Apply this icon pack from your launcher settings (Lawnchair: Settings, Icon style; Nova: Look and feel, Icon style).</string>
+</resources>

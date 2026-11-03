@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="icon_pack" translatable="false">
+        <item>aegis</item>
+        <item>amazon</item>
+        <item>angelone</item>
+        <item>aurora</item>
+        <item>bountyrush</item>
+        <item>brave</item>
+        <item>browser</item>
+        <item>calculator</item>
+        <item>calendar</item>
+        <item>camera</item>
+        <item>canarabank</item>
+        <item>cassettecat</item>
+        <item>clock</item>
+        <item>codescanner</item>
+        <item>compass</item>
+        <item>contacts</item>
+        <item>district</item>
+        <item>duckduckgo</item>
+        <item>easyshare</item>
+        <item>ente</item>
+        <item>fdroid</item>
+        <item>fennec</item>
+        <item>filemanager</item>
+        <item>files</item>
+        <item>forkgram</item>
+        <item>gallery</item>
+        <item>gamecenter</item>
+        <item>gauth</item>
+        <item>gcalendar</item>
+        <item>github</item>
+        <item>gmail</item>
+        <item>gold</item>
+        <item>gpay</item>
+        <item>hotstar</item>
+        <item>imanager</item>
+        <item>iqoocloud</item>
+        <item>jellyfin</item>
+        <item>leantype</item>
+        <item>letterboxd</item>
+        <item>libretorrent</item>
+        <item>maps</item>
+        <item>messages</item>
+        <item>mihon</item>
+        <item>msauth</item>
+        <item>myjio</item>
+        <item>netflix</item>
+        <item>newpipe</item>
+        <item>nextdns</item>
+        <item>notes</item>
+        <item>ntfy</item>
+        <item>obtainium</item>
+        <item>paytm</item>
+        <item>phone</item>
+        <item>playstore</item>
+        <item>privatedns</item>
+        <item>protonmail</item>
+        <item>protonvpn</item>
+        <item>qbitcontroller</item>
+        <item>recorder</item>
+        <item>reddit</item>
+        <item>settings</item>
+        <item>signal</item>
+        <item>simplekeyboard</item>
+        <item>simpleview</item>
+        <item>simpmusic</item>
+        <item>snapseed</item>
+        <item>spotify</item>
+        <item>spotube</item>
+        <item>steam</item>
+        <item>strava</item>
+        <item>swiggy</item>
+        <item>telegram</item>
+        <item>themes</item>
+        <item>thunderbird</item>
+        <item>tiktok</item>
+        <item>tuta</item>
+        <item>vappstore</item>
+        <item>vlc</item>
+        <item>voyager</item>
+        <item>weather</item>
+        <item>whatsapp</item>
+        <item>whereismytrain</item>
+        <item>zepto</item>
+        <item>fallback</item>
+    </string-array>
+    <string-array name="icon_labels" translatable="false">
+        <item>Aegis</item>
+        <item>Amazon</item>
+        <item>Angel One</item>
+        <item>Aurora Store</item>
+        <item>Bounty Rush</item>
+        <item>Brave</item>
+        <item>Browser</item>
+        <item>Calculator</item>
+        <item>Calendar</item>
+        <item>Camera</item>
+        <item>Canara Bank</item>
+        <item>CassetteCat</item>
+        <item>Clock</item>
+        <item>Code Scanner</item>
+        <item>Compass</item>
+        <item>Contacts</item>
+        <item>District</item>
+        <item>DuckDuckGo</item>
+        <item>EasyShare</item>
+        <item>Ente Photos</item>
+        <item>F-Droid</item>
+        <item>Fennec</item>
+        <item>File Manager</item>
+        <item>Files</item>
+        <item>Forkgram</item>
+        <item>Gallery</item>
+        <item>Game Center</item>
+        <item>Google Auth</item>
+        <item>Google Calendar</item>
+        <item>GitHub</item>
+        <item>Gmail</item>
+        <item>Gold</item>
+        <item>Google Pay</item>
+        <item>Hotstar</item>
+        <item>i Manager</item>
+        <item>iQOO Cloud</item>
+        <item>Jellyfin</item>
+        <item>LeanType</item>
+        <item>Letterboxd</item>
+        <item>LibreTorrent</item>
+        <item>Maps</item>
+        <item>Messages</item>
+        <item>Mihon</item>
+        <item>MS Auth</item>
+        <item>MyJio</item>
+        <item>Netflix</item>
+        <item>NewPipe</item>
+        <item>NextDNS Manager</item>
+        <item>Notes</item>
+        <item>ntfy</item>
+        <item>Obtainium</item>
+        <item>Paytm</item>
+        <item>Phone</item>
+        <item>Play Store</item>
+        <item>Private DNS Toggle</item>
+        <item>Proton Mail</item>
+        <item>Proton VPN</item>
+        <item>qBit Controller</item>
+        <item>Recorder</item>
+        <item>Reddit</item>
+        <item>Settings</item>
+        <item>Signal</item>
+        <item>Simple Keyboard</item>
+        <item>Simple View</item>
+        <item>SimpMusic</item>
+        <item>Snapseed</item>
+        <item>Spotify</item>
+        <item>Spotube</item>
+        <item>Steam</item>
+        <item>Strava</item>
+        <item>Swiggy</item>
+        <item>Telegram</item>
+        <item>Themes</item>
+        <item>Thunderbird</item>
+        <item>TikTok</item>
+        <item>Tuta</item>
+        <item>V-AppStore</item>
+        <item>VLC</item>
+        <item>Voyager</item>
+        <item>Weather</item>
+        <item>WhatsApp</item>
+        <item>Where Is My Train</item>
+        <item>Zepto</item>
+        <item>Fallback</item>
+    </string-array>
+</resources>
