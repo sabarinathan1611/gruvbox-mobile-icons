@@ -80,9 +80,19 @@ the phone in `mapping/components.txt`. It is read-only, and it only ever adds ro
 | `elements` | shapes drawn in order on a 24 × 24 grid with a 2-unit round stroke |
 
 Element `type`: `stroke`, `fill` (optional `"soft": true` rounds the edges), `ring`, or `knock`
-(a cut-out with a `"width"` margin of 0–8). `color` is `fg` (cream) or `accent` (orange).
+(a cut-out with a `"width"` margin of 0–8). `stroke` and `ring` take an optional `"width"` for
+the line width, 0.5–4 (default 2), for slimmer or bolder lines.
 `d` is ordinary SVG path data (`M L H V C S Q T A Z`). Icon Studio may add a `shape` object to
 remember rectangles and circles; it is optional.
+
+`color` is a colour role, not a hex value, so every icon follows the pack's palette:
+
+| Role | Gruvbox colour |
+|---|---|
+| `fg` | cream `#ebdbb2` |
+| `accent` | orange `#fe8019` |
+| `red` `green` `yellow` `blue` | `#fb4934` `#b8bb26` `#fabd2f` `#83a598` |
+| `purple` `aqua` `gray` | `#d3869b` `#8ec07c` `#928374` |
 
 ## Rules (CI enforces the first four)
 
