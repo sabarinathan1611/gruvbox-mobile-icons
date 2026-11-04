@@ -89,6 +89,8 @@
         <div class="brush" title="Colour and fill for new shapes">
           <button class="swatch-btn active" data-brush="fg" aria-label="Cream"></button>
           <button class="swatch-btn" data-brush="accent" aria-label="Accent"></button>
+          <button class="swatch-btn more" id="brush-more" aria-label="More colours" title="More colours"></button>
+          <div class="brush-pop" id="brush-pop" hidden></div>
           <button class="tool small" id="brush-fill" title="New shapes are filled (F)">
             <svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="3" class="fillable"/></svg>
           </button>
@@ -145,6 +147,8 @@
         <h3>Palette <button class="link" id="pal-reset">Reset</button></h3>
         <div class="presets" id="presets"></div>
         <div class="slots" id="slots"></div>
+        <p class="sub">More colours</p>
+        <div class="extra-slots" id="extra-slots"></div>
         <div class="gruvbox-swatches" id="gruvbox-swatches"></div>
         <p class="note">The pack itself always uses the Gruvbox palette. Your colours apply to the canvas, previews and SVG / PNG downloads.</p>
       </section>

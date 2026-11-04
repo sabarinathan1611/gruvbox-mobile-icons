@@ -115,6 +115,7 @@ code { font-family: var(--mono); font-size: .92em; background: var(--bg1); paddi
   transition: background var(--fast) var(--ease), border-color var(--fast), transform var(--fast) var(--ease), box-shadow var(--fast);
 }
 .btn:hover, .icon-btn:hover { background: var(--bg1); border-color: var(--bg2); }
+a.btn { color: var(--fg); text-decoration: none; }
 .btn:active, .icon-btn:active { transform: translateY(1px) scale(.98); }
 .btn:focus-visible, .icon-btn:focus-visible, .tool:focus-visible, .lib-item:focus-visible, .chip:focus-visible,
 .seg button:focus-visible, .swatch-btn:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
@@ -224,6 +225,24 @@ h3 { display: flex; align-items: center; justify-content: space-between; margin-
 .swatch-btn[data-brush="accent"] { background: var(--pal-accent, var(--orange)); }
 .swatch-btn:hover { transform: scale(1.08); }
 .swatch-btn.active { box-shadow: 0 0 0 2px var(--fg0); }
+.swatch-btn.more {
+  background: conic-gradient(var(--pal-red, #fb4934), var(--pal-yellow, #fabd2f), var(--pal-green, #b8bb26),
+    var(--pal-aqua, #8ec07c), var(--pal-blue, #83a598), var(--pal-purple, #d3869b), var(--pal-red, #fb4934));
+}
+.brush { position: relative; }
+.brush-pop {
+  position: absolute; left: calc(100% + 14px); top: 0; z-index: 10;
+  display: grid; grid-template-columns: repeat(3, 28px); gap: 8px; padding: 10px;
+  background: var(--bg0); border: 1px solid var(--bg2); border-radius: 12px; box-shadow: var(--shadow);
+  animation: pop-in var(--mid) var(--ease);
+}
+.brush-pop[hidden] { display: none; }
+.brush-pop button, .colors button {
+  width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--bg0); background: var(--c);
+  box-shadow: 0 0 0 1px var(--bg2); transition: transform var(--fast) var(--ease), box-shadow var(--fast);
+}
+.brush-pop button:hover, .colors button:hover { transform: scale(1.1); }
+.brush-pop button.on, .colors button.on { box-shadow: 0 0 0 2px var(--fg0); }
 
 .canvas-wrap { position: relative; display: grid; place-items: center; padding: 24px; min-height: 0; overflow: hidden; }
 #canvas {
@@ -372,6 +391,20 @@ input[type="range"] { width: 100%; accent-color: var(--orange); }
 .slot .name { font-size: 12.5px; font-weight: 600; }
 .slot .name small { display: block; color: var(--gray); font-weight: 400; font-size: 11px; }
 .slot .hex { padding: 5px 7px; font-family: var(--mono); font-size: 12px; text-transform: lowercase; }
+.colors { display: grid; grid-template-columns: repeat(9, 1fr); gap: 4px; justify-items: center; margin-top: 2px; }
+.colors button { width: 24px; height: 24px; }
+.row .val { float: right; color: var(--fg); font-family: var(--mono); font-size: 12px; }
+.sub { margin: 4px 0 6px; font-size: 11.5px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; color: var(--gray); }
+.extra-slots { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 10px; }
+.xslot {
+  display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 2px; border-radius: 9px;
+  border: 1px solid transparent; font-size: 11px; color: var(--fg3); cursor: pointer;
+  transition: background var(--fast), border-color var(--fast);
+}
+.xslot:hover { background: var(--bg1); }
+.xslot.on { border-color: var(--bg2); background: var(--bg1); }
+.xslot .sw { position: relative; width: 26px; height: 26px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgb(255 255 255 / .1); overflow: hidden; }
+.xslot .sw input { position: absolute; inset: -6px; width: 38px; height: 38px; opacity: 0; cursor: pointer; border: 0; padding: 0; }
 .gruvbox-swatches { display: grid; grid-template-columns: repeat(8, 1fr); gap: 5px; margin-bottom: 8px; }
 .gruvbox-swatches button {
   aspect-ratio: 1; border-radius: 6px; border: 0; box-shadow: inset 0 0 0 1px rgb(255 255 255 / .08);

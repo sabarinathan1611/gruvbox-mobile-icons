@@ -9,14 +9,30 @@
   const LIBRARY = (window.ICON_LIBRARY || []).slice().sort((a, b) => a.label.localeCompare(b.label));
   const DEFAULT_PALETTE = {
     tile: G.bg1 || '#3c3836', fg: G.fg || '#ebdbb2', accent: G.orange || '#fe8019', bg: G.bg0_h || '#1d2021',
+    red: G.red || '#fb4934', green: G.green || '#b8bb26', yellow: G.yellow || '#fabd2f', blue: G.blue || '#83a598',
+    purple: G.purple || '#d3869b', aqua: G.aqua || '#8ec07c', gray: G.gray || '#928374',
   };
+  // Colour roles a shape can use; the pack renders each role from its own palette
+  const ROLES = [
+    { key: 'fg', name: 'Cream' }, { key: 'accent', name: 'Accent' }, { key: 'red', name: 'Red' },
+    { key: 'green', name: 'Green' }, { key: 'yellow', name: 'Yellow' }, { key: 'blue', name: 'Blue' },
+    { key: 'purple', name: 'Purple' }, { key: 'aqua', name: 'Aqua' }, { key: 'gray', name: 'Gray' },
+  ];
+  const ROLE_KEYS = ROLES.map(r => r.key);
+  const ROLE_NAME = Object.fromEntries(ROLES.map(r => [r.key, r.name]));
+  const STROKE = { min: 0.5, max: 4, def: 2 };  // line width range for stroke and ring shapes
   const PRESETS = [
     { id: 'dark', label: 'Gruvbox', pal: { ...DEFAULT_PALETTE } },
     { id: 'aqua', label: 'Aqua', pal: { ...DEFAULT_PALETTE, accent: G.aqua || '#8ec07c' } },
     { id: 'yellow', label: 'Yellow', pal: { ...DEFAULT_PALETTE, accent: G.yellow || '#fabd2f' } },
     { id: 'blue', label: 'Blue', pal: { ...DEFAULT_PALETTE, accent: G.blue || '#83a598' } },
     { id: 'purple', label: 'Purple', pal: { ...DEFAULT_PALETTE, accent: G.purple || '#d3869b' } },
-    { id: 'light', label: 'Light', pal: { tile: '#ebdbb2', fg: '#3c3836', accent: '#d65d0e', bg: '#fbf1c7' } },
+    {
+      id: 'light', label: 'Light', pal: {
+        tile: '#ebdbb2', fg: '#3c3836', accent: '#d65d0e', bg: '#fbf1c7', red: '#9d0006', green: '#79740e',
+        yellow: '#b57614', blue: '#076678', purple: '#8f3f71', aqua: '#427b58', gray: '#7c6f64',
+      },
+    },
   ];
   const SLOTS = [
     { key: 'tile', name: 'Tile', hint: 'icon background' },
@@ -155,14 +171,20 @@
   const circleD = ({ cx, cy, r }) =>
     `M${P(cx - r, cy)} A${fmt(r)} ${fmt(r)} 0 1 0 ${P(cx + r, cy)} A${fmt(r)} ${fmt(r)} 0 1 0 ${P(cx - r, cy)} Z`;
   const shapeD = s => (s.kind === 'rect' ? rectD(s) : circleD(s));
+  // Smallest allowed sizes; a negative radius would make an invalid arc
+  const SHAPE_MIN = { w: 0.5, h: 0.5, rectR: 0, circleR: 0.25 };
   function rectFrom(a, b) {
     const w = Math.abs(b[0] - a[0]), h = Math.abs(b[1] - a[1]);
     return { kind: 'rect', x: Math.min(a[0], b[0]), y: Math.min(a[1], b[1]), w, h, r: Math.min(2.5, w / 2, h / 2) };
   }
   function sanitizeShape(s) {
     const nums = keys => keys.every(k => typeof s[k] === 'number' && Number.isFinite(s[k]));
-    if (s.kind === 'rect' && nums(['x', 'y', 'w', 'h', 'r'])) return roundShape({ kind: 'rect', x: s.x, y: s.y, w: s.w, h: s.h, r: s.r });
-    if (s.kind === 'circle' && nums(['cx', 'cy', 'r'])) return roundShape({ kind: 'circle', cx: s.cx, cy: s.cy, r: s.r });
+    if (s.kind === 'rect' && nums(['x', 'y', 'w', 'h', 'r'])) {
+      return roundShape({ kind: 'rect', x: s.x, y: s.y, w: Math.max(SHAPE_MIN.w, s.w), h: Math.max(SHAPE_MIN.h, s.h), r: Math.max(0, s.r) });
+    }
+    if (s.kind === 'circle' && nums(['cx', 'cy', 'r'])) {
+      return roundShape({ kind: 'circle', cx: s.cx, cy: s.cy, r: Math.max(SHAPE_MIN.circleR, s.r) });
+    }
     return null;
   }
 
@@ -173,15 +195,17 @@
   })();
 
   function elementMarkup(el, pal) {
-    const col = el.color === 'accent' ? pal.accent : pal.fg;
+    const col = pal[el.color] || pal.fg;
     const d = esc(el.d);
+    const w = el.width != null && el.width !== STROKE.def ? ` stroke-width="${fmt(el.width)}"` : '';
     switch (el.type) {
       case 'fill': return `<path d="${d}" fill="${col}"${el.soft ? ` stroke="${col}" stroke-width="1.2"` : ''}/>`;
-      case 'ring': return `<path d="${d}" fill="${pal.tile}" stroke="${col}"/>`;
+      case 'ring': return `<path d="${d}" fill="${pal.tile}" stroke="${col}"${w}/>`;
       case 'knock': return `<path d="${d}" fill="${pal.tile}" stroke="${pal.tile}" stroke-width="${fmt(el.width ?? 5)}"/>`;
-      default: return `<path d="${d}" stroke="${col}"/>`;
+      default: return `<path d="${d}" stroke="${col}"${w}/>`;
     }
   }
+  const hasLineWidth = el => el.type === 'stroke' || el.type === 'ring';
 
   function iconSVG(elements, pal, size = 192, attrs = '') {
     const body = elements.map(e => elementMarkup(e, pal)).join('\n    ');
@@ -222,12 +246,13 @@
     for (const e of raw.elements.slice(0, 200)) {
       try {
         if (!e || typeof e.d !== 'string') throw new Error('no path');
-        parsePath(e.d);
-        const el = { id: newId(), type: TYPES.includes(e.type) ? e.type : 'stroke', color: e.color === 'accent' ? 'accent' : 'fg', d: e.d };
+        const el = { id: newId(), type: TYPES.includes(e.type) ? e.type : 'stroke', color: ROLE_KEYS.includes(e.color) ? e.color : 'fg', d: e.d };
         if (el.type === 'fill' && e.soft) el.soft = true;
         if (el.type === 'knock') el.width = typeof e.width === 'number' ? clamp(e.width, 0, 8) : 5;
+        else if (hasLineWidth(el) && typeof e.width === 'number') el.width = clamp(e.width, STROKE.min, STROKE.max);
         const shape = e.shape && sanitizeShape(e.shape);
-        if (shape) el.shape = shape;
+        if (shape) { el.shape = shape; el.d = shapeD(shape); }  // also repairs a broken saved shape
+        parsePath(el.d);
         doc.elements.push(el);
       } catch { skipped++; }
     }
@@ -246,6 +271,7 @@
       o.d = e.d;
       if (e.type === 'fill' && e.soft) o.soft = true;
       if (e.type === 'knock') o.width = e.width ?? 5;
+      else if (hasLineWidth(e) && e.width != null && e.width !== STROKE.def) o.width = e.width;
       if (e.shape) o.shape = roundShape(e.shape);
       return o;
     });
@@ -263,18 +289,20 @@
     if (!doc.packages.length && !doc.components.length) warnings.push('No package yet: the icon won’t be applied to any app.');
     if (!doc.elements.length) errors.push('Draw at least one shape.');
     if (doc.elements.length > MAX_ELEMENTS) errors.push(`At most ${MAX_ELEMENTS} shapes per icon.`);
-    let out = 0, edge = 0;
+    let out = 0, edge = 0, bad = 0;
     for (const e of doc.elements) {
-      const pts = pathPoints(parsePath(e.d));
+      let pts;
+      try { pts = pathPoints(parsePath(e.d)); } catch { bad++; continue; }
       const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]);
       const lo = Math.min(...xs, ...ys), hi = Math.max(...xs, ...ys);
       if (lo < -0.5 || hi > 24.5) out++;
       else if (lo < 1 || hi > 23) edge++;
     }
+    if (bad) errors.push(`${bad} shape${bad > 1 ? 's have' : ' has'} invalid path data: select it in Layers, then fix the path or delete it.`);
     if (out) errors.push(`${out} shape${out > 1 ? 's go' : ' goes'} outside the 24 × 24 grid.`);
     else if (edge) warnings.push(`${edge} shape${edge > 1 ? 's reach' : ' reaches'} the edge; keep content inside the dashed square.`);
-    if (doc.elements.length && !doc.elements.some(e => e.type !== 'knock' && e.color === 'accent')) {
-      warnings.push('No orange accent yet: the style uses one accent element.');
+    if (doc.elements.length && !doc.elements.some(e => e.type !== 'knock' && e.color !== 'fg')) {
+      warnings.push('No colour yet: the style uses at least one accent-coloured shape.');
     }
     if (doc.name && doc.name !== state.sourceName && LIBRARY.some(g => g.name === doc.name)) {
       warnings.push(`An icon called “${doc.name}” already exists; this export will replace it.`);
@@ -342,7 +370,7 @@
       el.shape = roundShape(s);
       el.d = shapeD(el.shape);
     } else {
-      el.d = serializePath(translateSegs(parsePath(el.d), dx, dy));
+      try { el.d = serializePath(translateSegs(parsePath(el.d), dx, dy)); } catch { /* unreadable path stays put */ }
     }
     return el;
   }
@@ -390,9 +418,12 @@
     const el = selected();
     if (!el || el[key] === val) return;
     checkpoint();
+    const prev = el[key];
     el[key] = val;
     if (key === 'type') {
-      if (val === 'knock') el.width = el.width ?? 5; else delete el.width;
+      // width means the cut-out margin for knock shapes and the line width for stroke / ring
+      if (val === 'knock') el.width = 5;
+      else if (val === 'fill' || prev === 'knock') delete el.width;
       if (val !== 'fill') delete el.soft;
     }
     markDirty();
@@ -510,6 +541,11 @@
 
   // ----- inspector: element -----
   const elementPanel = $('#element-panel');
+  function shapeMin(kind, key) {
+    if (kind === 'circle') return key === 'r' ? SHAPE_MIN.circleR : null;
+    return { w: SHAPE_MIN.w, h: SHAPE_MIN.h, r: SHAPE_MIN.rectR }[key] ?? null;
+  }
+  const shapeMinAttr = (kind, key) => (shapeMin(kind, key) == null ? '' : ` min="${shapeMin(kind, key)}"`);
   function renderElementPanel() {
     const ae = document.activeElement;
     if (elementPanel.contains(ae) && ae.matches('input, textarea') && elementPanel.dataset.for === (state.selected || '')) return;
@@ -524,16 +560,17 @@
       ? `<div class="num-grid">${(el.shape.kind === 'rect'
         ? [['x', 'X'], ['y', 'Y'], ['w', 'Width'], ['h', 'Height'], ['r', 'Radius']]
         : [['cx', 'Centre X'], ['cy', 'Centre Y'], ['r', 'Radius']])
-        .map(([k, l]) => `<label>${l}<input class="field mono" type="number" step="0.5" data-shape="${k}" value="${fmt(el.shape[k])}"></label>`).join('')}</div>`
+        .map(([k, l]) => `<label>${l}<input class="field mono" type="number" step="0.5" data-shape="${k}"${shapeMinAttr(el.shape.kind, k)} value="${fmt(el.shape[k])}"></label>`).join('')}</div>`
       : '';
     elementPanel.innerHTML = `
       <div class="seg" data-seg="type">${TYPES.map(t => `<button data-val="${t}" class="${el.type === t ? 'on' : ''}" title="${{
         stroke: '2-unit line', fill: 'Solid shape', ring: 'Outline filled with the tile colour', knock: 'Tile-coloured cut-out that separates shapes',
       }[t]}">${TYPE_LABEL[t]}</button>`).join('')}</div>
-      ${el.type !== 'knock' ? `<div class="seg" data-seg="color">
-        <button data-val="fg" class="${el.color === 'fg' ? 'on' : ''}"><span class="sw" style="background:${pal.fg}"></span>Lines</button>
-        <button data-val="accent" class="${el.color === 'accent' ? 'on' : ''}"><span class="sw" style="background:${pal.accent}"></span>Accent</button>
-      </div>` : ''}
+      ${el.type !== 'knock' ? `<div class="row">Colour <span class="val">${ROLE_NAME[el.color] || 'Cream'}</span>
+        <div class="colors">${ROLES.map(r => `<button data-color-role="${r.key}" class="${el.color === r.key ? 'on' : ''}"
+          style="--c:${pal[r.key]}" title="${r.name}" aria-label="${r.name}"></button>`).join('')}</div></div>` : ''}
+      ${hasLineWidth(el) ? `<label class="row">Line width <span class="val" data-val-for="stroke-width">${fmt(el.width ?? STROKE.def)}</span>
+        <input type="range" min="${STROKE.min}" max="${STROKE.max}" step="0.25" data-prop="stroke-width" value="${el.width ?? STROKE.def}"></label>` : ''}
       ${el.type === 'fill' ? `<div class="toggle-row">Soft edges<label class="switch"><input type="checkbox" data-prop="soft"${el.soft ? ' checked' : ''}><span></span></label></div>` : ''}
       ${el.type === 'knock' ? `<label class="row">Cut-out margin <input type="range" min="0" max="8" step="0.5" data-prop="width" value="${el.width ?? 5}"></label>` : ''}
       ${shape}
@@ -555,7 +592,7 @@
       <li class="layer${e.id === state.selected ? ' on' : ''}" draggable="true" data-id="${e.id}">
         <span class="n">${i + 1}</span>
         <svg viewBox="-1 -1 26 26"><g fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${elementMarkup(e, pal)}</g></svg>
-        <span>${TYPE_LABEL[e.type]}${e.type !== 'knock' && e.color === 'accent' ? ' · accent' : ''}${e.shape ? ` · ${e.shape.kind}` : ''}</span>
+        <span>${TYPE_LABEL[e.type]}${e.type !== 'knock' && e.color !== 'fg' ? ` · ${(ROLE_NAME[e.color] || '').toLowerCase()}` : ''}${e.shape ? ` · ${e.shape.kind}` : ''}</span>
         <span class="grip" aria-hidden="true">⋮⋮</span>
       </li>`).join('') || '<li class="placeholder">No shapes yet.</li>';
   }
@@ -598,9 +635,10 @@
   // ----- palette -----
   function applyPaletteVars() {
     const s = document.documentElement.style;
-    SLOTS.forEach(({ key }) => s.setProperty(`--pal-${key}`, state.palette[key]));
+    Object.keys(DEFAULT_PALETTE).forEach(key => s.setProperty(`--pal-${key}`, state.palette[key]));
   }
-  const samePal = p => SLOTS.every(({ key }) => p[key].toLowerCase() === state.palette[key].toLowerCase());
+  const samePal = p => Object.keys(DEFAULT_PALETTE).every(key => (p[key] || '').toLowerCase() === state.palette[key].toLowerCase());
+  const EXTRA_ROLES = ROLES.filter(r => r.key !== 'fg' && r.key !== 'accent');
   function renderPalette() {
     $('#presets').innerHTML = PRESETS.map(p => `<button class="preset${samePal(p.pal) ? ' on' : ''}" data-preset="${p.id}">
       <i>${['tile', 'fg', 'accent'].map(k => `<b style="background:${p.pal[k]}"></b>`).join('')}</i>${p.label}</button>`).join('');
@@ -620,6 +658,12 @@
         if (document.activeElement !== hex) hex.value = state.palette[k];
         if (document.activeElement !== col) col.value = state.palette[k];
       });
+    }
+    const extra = $('#extra-slots');
+    if (!extra.contains(document.activeElement)) {
+      extra.innerHTML = EXTRA_ROLES.map(r => `<div class="xslot${state.activeSlot === r.key ? ' on' : ''}" data-slot="${r.key}">
+        <span class="sw" style="background:${state.palette[r.key]}"><input type="color" value="${state.palette[r.key]}" data-color="${r.key}" aria-label="${r.name} colour"></span>
+        <span>${r.name}</span></div>`).join('');
     }
     const seen = new Set();
     $('#gruvbox-swatches').innerHTML = Object.entries(G)
@@ -664,7 +708,15 @@
     render();
   }
   function syncToolbar() {
+    if (!ROLE_KEYS.includes(state.prefs.brushColor)) state.prefs.brushColor = 'fg';
+    const extra = !['fg', 'accent'].includes(state.prefs.brushColor);
     document.querySelectorAll('[data-brush]').forEach(b => b.classList.toggle('active', b.dataset.brush === state.prefs.brushColor));
+    const more = $('#brush-more');
+    more.classList.toggle('active', extra);
+    more.style.background = extra ? `var(--pal-${state.prefs.brushColor})` : '';
+    more.title = extra ? `New shapes: ${ROLE_NAME[state.prefs.brushColor]} (click for more colours)` : 'More colours';
+    $('#brush-pop').innerHTML = ROLES.map(r => `<button data-pick="${r.key}" class="${r.key === state.prefs.brushColor ? 'on' : ''}"
+      style="--c:var(--pal-${r.key})" title="${r.name}" aria-label="${r.name}"></button>`).join('');
     $('#brush-fill').classList.toggle('active', state.prefs.brushFill);
     $('#t-grid').classList.toggle('active', state.prefs.grid);
     $('#t-snap').classList.toggle('active', state.prefs.snap);
@@ -824,6 +876,7 @@
   elementPanel.addEventListener('click', e => {
     const b = e.target.closest('button');
     if (!b) return;
+    if (b.dataset.colorRole) return setProp('color', b.dataset.colorRole);
     const seg = b.closest('[data-seg]');
     if (seg) return setProp(seg.dataset.seg, b.dataset.val);
     ({
@@ -856,14 +909,22 @@
     } else if (t.dataset.prop === 'width') {
       beginEdit();
       el.width = parseFloat(t.value);
+    } else if (t.dataset.prop === 'stroke-width') {
+      beginEdit();
+      const w = clamp(parseFloat(t.value), STROKE.min, STROKE.max);
+      if (w === STROKE.def) delete el.width; else el.width = w;
+      const label = elementPanel.querySelector('[data-val-for="stroke-width"]');
+      if (label) label.textContent = fmt(w);
     } else if (t.dataset.prop === 'soft') {
       checkpoint();
       if (t.checked) el.soft = true; else delete el.soft;
     } else if (t.dataset.shape) {
-      const v = parseFloat(t.value);
+      const k = t.dataset.shape, min = shapeMin(el.shape.kind, k);
+      let v = parseFloat(t.value);
       if (!Number.isFinite(v)) return;
+      if (min != null && v < min) { v = min; t.value = fmt(min); }
       beginEdit();
-      el.shape[t.dataset.shape] = v;
+      el.shape[k] = v;
       el.shape = roundShape(el.shape);
       el.d = shapeD(el.shape);
     } else return;
@@ -947,7 +1008,7 @@
     const slot = e.target.closest('[data-slot]');
     if (slot && state.activeSlot !== slot.dataset.slot) { state.activeSlot = slot.dataset.slot; renderPalette(); }
   });
-  $('#slots').addEventListener('input', e => {
+  $('#card-palette').addEventListener('input', e => {
     const t = e.target;
     if (t.dataset.color) { state.activeSlot = t.dataset.color; setPalette({ [t.dataset.color]: t.value }); }
     if (t.dataset.hex) {
@@ -1086,11 +1147,24 @@
 
   // ---------- toolbar & top bar events ----------
   document.querySelectorAll('.tool[data-tool]').forEach(b => b.addEventListener('click', () => setTool(b.dataset.tool)));
-  document.querySelectorAll('[data-brush]').forEach(b => b.addEventListener('click', () => {
-    state.prefs.brushColor = b.dataset.brush;
+  function setBrush(role) {
+    state.prefs.brushColor = role;
     savePrefs();
     syncToolbar();
-  }));
+  }
+  document.querySelectorAll('[data-brush]').forEach(b => b.addEventListener('click', () => setBrush(b.dataset.brush)));
+  const brushPop = $('#brush-pop');
+  $('#brush-more').addEventListener('click', e => {
+    e.stopPropagation();
+    brushPop.hidden = !brushPop.hidden;
+  });
+  brushPop.addEventListener('click', e => {
+    const b = e.target.closest('[data-pick]');
+    if (!b) return;
+    setBrush(b.dataset.pick);
+    brushPop.hidden = true;
+  });
+  document.addEventListener('click', e => { if (!brushPop.hidden && !brushPop.contains(e.target)) brushPop.hidden = true; });
   $('#brush-fill').addEventListener('click', () => togglePref('brushFill', 'Fill new shapes'));
   $('#t-grid').addEventListener('click', () => togglePref('grid', 'Grid'));
   $('#t-snap').addEventListener('click', () => togglePref('snap', 'Snapping'));

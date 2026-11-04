@@ -90,7 +90,8 @@ remember rectangles and circles; it is optional.
 - At most 40 shapes, files up to 16 KB, path data only (no scripts, links or embedded images).
 - A package can belong to only one icon.
 - The name must be unique and must not be a Java keyword.
-- One orange accent element, flat colours, and a 2-unit stroke.
+- Flat colours from the palette roles, mostly cream with a coloured accent, and 2-unit lines
+  unless a thinner or thicker line clearly reads better.
 - **Never copy a brand logo.** Draw what the app does.
 
 ## What happens after you push

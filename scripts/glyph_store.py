@@ -21,12 +21,13 @@ import json
 import re
 from pathlib import Path
 
-from palette import ACCENT, BG1, FG
+from palette import ACCENT, AQUA, BG1, BLUE, FG, GRAY, GREEN, PURPLE, RED, YELLOW
 
 ROOT = Path(__file__).resolve().parent.parent
 GLYPH_DIR = ROOT / "glyphs"
 
-DEFAULT_PALETTE = {"tile": BG1, "fg": FG, "accent": ACCENT}
+DEFAULT_PALETTE = {"tile": BG1, "fg": FG, "accent": ACCENT, "red": RED, "green": GREEN, "yellow": YELLOW,
+                   "blue": BLUE, "purple": PURPLE, "aqua": AQUA, "gray": GRAY}
 SIZE = 192
 TILE_RADIUS = 5.28          # 22% of the 24-unit tile
 GLYPH_BOX = 13.0            # glyph grid is scaled into the central 13 units of the tile
@@ -35,7 +36,8 @@ MAX_FILE_BYTES = 16 * 1024
 MAX_ELEMENTS = 40
 MAX_PATH_CHARS = 2000
 TYPES = {"stroke", "fill", "ring", "knock"}
-COLORS = {"fg", "accent"}
+COLORS = {"fg", "accent", "red", "green", "yellow", "blue", "purple", "aqua", "gray"}
+STROKE_WIDTH = (0.5, 4.0)   # allowed line width for stroke and ring elements; 2 is the default
 TOP_KEYS = {"name", "label", "packages", "components", "author", "elements"}
 ELEMENT_KEYS = {"type", "color", "d", "soft", "width", "shape"}
 RESERVED = {"iconback", "ic_launcher"}
@@ -158,14 +160,18 @@ def validate(data, filename: str | None = None) -> tuple[list[str], list[str]]:
             errors.append(f"{where}: type must be one of {sorted(TYPES)}")
         if typ in ("stroke", "fill", "ring"):
             if el.get("color") not in COLORS:
-                errors.append(f"{where}: color must be 'fg' or 'accent'")
-            has_accent |= el.get("color") == "accent"
+                errors.append(f"{where}: color must be one of {', '.join(sorted(COLORS))}")
+            has_accent |= el.get("color") not in (None, "fg")
         if "soft" in el and not isinstance(el["soft"], bool):
             errors.append(f"{where}: soft must be true or false")
-        if typ == "knock":
-            w = el.get("width", 5)
-            if not isinstance(w, (int, float)) or isinstance(w, bool) or not 0 <= w <= 8:
-                errors.append(f"{where}: knock width must be a number 0-8")
+        w = el.get("width")
+        is_num = isinstance(w, (int, float)) and not isinstance(w, bool)
+        if typ == "knock" and w is not None and not (is_num and 0 <= w <= 8):
+            errors.append(f"{where}: knock width must be a number 0-8")
+        elif typ in ("stroke", "ring") and w is not None and not (is_num and STROKE_WIDTH[0] <= w <= STROKE_WIDTH[1]):
+            errors.append(f"{where}: line width must be a number {STROKE_WIDTH[0]:g}-{STROKE_WIDTH[1]:g}")
+        elif typ == "fill" and w is not None:
+            errors.append(f"{where}: fill shapes have no width")
         if "shape" in el and not isinstance(el["shape"], dict):
             errors.append(f"{where}: shape must be an object")
         d = el.get("d")
@@ -186,7 +192,7 @@ def validate(data, filename: str | None = None) -> tuple[list[str], list[str]]:
         elif min(xs) < 1 or min(ys) < 1 or max(xs) > 23 or max(ys) > 23:
             warnings.append(f"{where}: reaches the grid edge; keep content inside 2..22")
     if not has_accent and name != "fallback":
-        warnings.append("no accent-coloured element (the style uses one orange accent)")
+        warnings.append("no coloured element (the style uses at least one accent colour)")
     return errors, warnings
 
 
@@ -200,13 +206,15 @@ def element_svg(el: dict, pal: dict) -> str:
     d = el["d"]
     typ = el["type"]
     col = pal.get(el.get("color", "fg"), pal["fg"])
+    w = el.get("width")
+    width = f' stroke-width="{_num(w)}"' if typ in ("stroke", "ring") and w is not None and w != 2 else ""
     if typ == "stroke":
-        return f'<path d="{d}" stroke="{col}"/>'
+        return f'<path d="{d}" stroke="{col}"{width}/>'
     if typ == "fill":
         soft = f' stroke="{col}" stroke-width="1.2"' if el.get("soft") else ""
         return f'<path d="{d}" fill="{col}"{soft}/>'
     if typ == "ring":
-        return f'<path d="{d}" fill="{pal["tile"]}" stroke="{col}"/>'
+        return f'<path d="{d}" fill="{pal["tile"]}" stroke="{col}"{width}/>'
     tile = pal["tile"]
     return f'<path d="{d}" fill="{tile}" stroke="{tile}" stroke-width="{_num(el.get("width", 5))}"/>'
 
