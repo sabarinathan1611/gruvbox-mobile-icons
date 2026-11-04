@@ -17,3 +17,6 @@ iconpack/local.properties
 
 # Local tooling
 .claude/
+
+# GitHub Pages build output
+_site/

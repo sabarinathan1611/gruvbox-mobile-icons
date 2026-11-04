@@ -1,3 +1,5 @@
 pillow==13.0.0
 numpy==2.5.4
 resvg-py==0.5.0
+markdown==3.11.2
+pygments==2.21.0

@@ -1097,6 +1097,8 @@
   $('#btn-undo').addEventListener('click', undo);
   $('#btn-redo').addEventListener('click', redo);
   $('#btn-help').addEventListener('click', () => $('#help').showModal());
+  // On the hosted site docs/ sits next to the Studio; opened from disk, use the hosted docs
+  if (location.protocol === 'file:') $('#btn-docs').href = 'https://sabarinathan1611.github.io/gruvbox-mobile-icons/docs/';
   $('#st-valid').addEventListener('click', () => flash('#card-app'));
 
   // ---------- keyboard ----------

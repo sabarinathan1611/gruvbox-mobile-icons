@@ -6,6 +6,10 @@ Lawnchair and any launcher that supports ADW / Nova icon packs.
 
 I use it daily with **Nova Launcher** on an iQOO (vivo OriginOS, Android 16).
 
+**[Open Icon Studio online](https://sabarinathan1611.github.io/gruvbox-mobile-icons/)** ·
+**[Documentation](https://sabarinathan1611.github.io/gruvbox-mobile-icons/docs/)** ·
+**[Download the APK](https://github.com/sabarinathan1611/gruvbox-mobile-icons/releases/latest)**
+
 ![Icon preview](preview/icons_sheet.png)
 
 ![Wallpapers](preview/wallpapers_contact_sheet.png)
@@ -18,7 +22,8 @@ are also in [`wallpapers/`](wallpapers).
 
 ## Make or edit icons: Icon Studio
 
-Open [`editor/index.html`](editor/index.html) in any browser. There's nothing to install, and it works offline.
+Use it **[online](https://sabarinathan1611.github.io/gruvbox-mobile-icons/)**, or open
+[`editor/index.html`](editor/index.html) from a clone in any browser. There's nothing to install, and it works offline.
 
 - **Create icons**: draw lines, polylines, rounded rectangles and circles on the 24-unit grid, with
   snapping, node editing, layers, undo and live launcher-size previews.
