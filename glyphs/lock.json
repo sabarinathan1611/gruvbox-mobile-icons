@@ -1,0 +1,50 @@
+{
+  "name": "lock",
+  "label": "com.android.bbk.lockscreen3",
+  "packages": [
+    "com.android.bbk.lockscreen3"
+  ],
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M8.5 9 H15 A2.5 2.5 0 0 1 17.5 11.5 V18 A2.5 2.5 0 0 1 15 20.5 H8.5 A2.5 2.5 0 0 1 6 18 V11.5 A2.5 2.5 0 0 1 8.5 9 Z",
+      "shape": {
+        "kind": "rect",
+        "x": 6,
+        "y": 9,
+        "w": 11.5,
+        "h": 11.5,
+        "r": 2.5
+      }
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M8 9 L8 3.5"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M8 3.5 L14.5 3.5"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M15 3.5 L15 8.5"
+    },
+    {
+      "type": "fill",
+      "color": "accent",
+      "d": "M11.75 13 H11.75 A1.25 1.25 0 0 1 13 14.25 V17.25 A1.25 1.25 0 0 1 11.75 18.5 H11.75 A1.25 1.25 0 0 1 10.5 17.25 V14.25 A1.25 1.25 0 0 1 11.75 13 Z",
+      "shape": {
+        "kind": "rect",
+        "x": 10.5,
+        "y": 13,
+        "w": 2.5,
+        "h": 5.5,
+        "r": 1.25
+      }
+    }
+  ]
+}
