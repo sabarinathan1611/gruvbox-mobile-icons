@@ -41,6 +41,7 @@
         <item>leantype</item>
         <item>letterboxd</item>
         <item>libretorrent</item>
+        <item>lock</item>
         <item>maps</item>
         <item>messages</item>
         <item>mihon</item>
@@ -127,6 +128,7 @@
         <item>LeanType</item>
         <item>Letterboxd</item>
         <item>LibreTorrent</item>
+        <item>com.android.bbk.lockscreen3</item>
         <item>Maps</item>
         <item>Messages</item>
         <item>Mihon</item>
