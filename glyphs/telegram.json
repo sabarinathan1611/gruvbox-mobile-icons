@@ -1,0 +1,25 @@
+{
+  "name": "telegram",
+  "label": "Telegram",
+  "packages": [
+    "org.telegram.messenger"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "fill",
+      "color": "accent",
+      "d": "M10 13.5 L13.5 20.5 L21 3.5 Z"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M21 3.5 L3 10.5 L10 13.5 L13.5 20.5 Z"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M21 3.5 L10 13.5"
+    }
+  ]
+}

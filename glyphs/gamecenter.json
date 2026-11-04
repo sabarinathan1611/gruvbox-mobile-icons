@@ -1,0 +1,31 @@
+{
+  "name": "gamecenter",
+  "label": "Game Center",
+  "packages": [
+    "com.vivo.game"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M6 15 H18 A2 2 0 0 1 20 17 V19 A2 2 0 0 1 18 21 H6 A2 2 0 0 1 4 19 V17 A2 2 0 0 1 6 15 Z"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M12 15 V9.5"
+    },
+    {
+      "type": "fill",
+      "color": "accent",
+      "d": "M9 6.5 a3 3 0 1 0 6 0 a3 3 0 1 0 -6 0 Z",
+      "soft": true
+    },
+    {
+      "type": "fill",
+      "color": "fg",
+      "d": "M15.5 18 a1 1 0 1 0 2 0 a1 1 0 1 0 -2 0 Z"
+    }
+  ]
+}

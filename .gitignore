@@ -14,3 +14,6 @@ iconpack/local.properties
 *.apk
 *.keystore
 *.jks
+
+# Local tooling
+.claude/

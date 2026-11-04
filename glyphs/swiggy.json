@@ -1,0 +1,30 @@
+{
+  "name": "swiggy",
+  "label": "Swiggy",
+  "packages": [
+    "in.swiggy.android"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M3 11.5 H21 C21 16.5 17 20.5 12 20.5 C7 20.5 3 16.5 3 11.5 Z"
+    },
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M8.5 3.5 C7.5 5 9.5 6.5 8.5 8.5"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M12 3 C11 4.5 13 6 12 8"
+    },
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M15.5 3.5 C14.5 5 16.5 6.5 15.5 8.5"
+    }
+  ]
+}

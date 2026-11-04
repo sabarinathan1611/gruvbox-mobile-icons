@@ -16,6 +16,22 @@ Get the latest APK from **[Releases](https://github.com/sabarinathan1611/gruvbox
 install it, then apply it from your launcher. The wallpapers are attached to each release and
 are also in [`wallpapers/`](wallpapers).
 
+## Make or edit icons: Icon Studio
+
+Open [`editor/index.html`](editor/index.html) in any browser. There's nothing to install, and it works offline.
+
+- **Create icons**: draw lines, polylines, rounded rectangles and circles on the 24-unit grid, with
+  snapping, node editing, layers, undo and live launcher-size previews.
+- **Edit any icon in the pack**: pick it from the searchable library and change it.
+- **Full palette control**: Gruvbox presets, or change the tile, line, accent and wallpaper colours.
+- **Download** as SVG or PNG (192 / 512 px) in your colours, or as **Glyph JSON** for the pack.
+
+To add an icon to the pack, put the exported `<name>.json` in [`glyphs/`](glyphs) and push or open a
+pull request. CI validates the file, scans it for malware, renders the icons and builds the APK.
+A release goes out after approval ([details](docs/how-to-make-icons.md#what-happens-after-you-push)).
+
+[![CI](https://github.com/sabarinathan1611/gruvbox-mobile-icons/actions/workflows/ci.yml/badge.svg)](https://github.com/sabarinathan1611/gruvbox-mobile-icons/actions/workflows/ci.yml)
+
 ## Apply in Nova Launcher
 
 1. Open **Nova Settings → Look & feel → Icon style → Icon theme** and choose **Gruvbox Clean**.
@@ -66,7 +82,7 @@ lock screen `gruvbox_clean_d_lockscreen` (top 35% left empty for the clock).
 - A glyph on a 24-unit grid with a 2-unit round stroke, drawn in `#ebdbb2` with one orange `#fe8019` accent.
 - Flat shapes only: no gradients or shadows.
 - Icons show what an app *does* (a cart, a paper plane, a gamepad); they never copy brand logos.
-- Everything is generated from code in [`scripts/`](scripts); the SVG sources are in [`icons/svg/`](icons/svg).
+- Each icon is a small JSON file in [`glyphs/`](glyphs); [`scripts/`](scripts) renders them to [`icons/svg/`](icons/svg) and [`icons/png/`](icons/png).
 
 ## Docs
 
@@ -77,8 +93,11 @@ lock screen `gruvbox_clean_d_lockscreen` (top 35% left empty for the clock).
 ## Project layout
 
 ```
-scripts/        palette, glyph artwork and the generators (Python)
-icons/svg|png   one icon per app, plus fallback and iconback
+glyphs/         one JSON file per icon: the source of truth
+editor/         Icon Studio (HTML, CSS, JS)
+scripts/        palette, validator and the generators (Python)
+.github/        CI (validate, malware scan, build) and approval-gated releases
+icons/svg|png   rendered icons, plus fallback and iconback
 wallpapers/     1080x2392 PNG wallpapers
 mapping/        components.txt: launcher components mapped to icons
 preview/        preview sheets
@@ -93,7 +112,7 @@ Copyright © 2026 sabarinathan1611.
 | Part | Licence |
 |---|---|
 | **Code**: `scripts/`, `iconpack/` (Gradle, Java, XML) | [Apache License 2.0](LICENSE) |
-| **Artwork**: icons, wallpapers, previews, and the glyph designs in `scripts/glyphs.py` | [CC BY-NC-SA 4.0](LICENSE-ARTWORK) |
+| **Artwork**: icons, wallpapers, previews, and the glyph designs in `glyphs/` | [CC BY-NC-SA 4.0](LICENSE-ARTWORK) |
 
 You're welcome to use, share and remix the icons and wallpapers **for non-commercial use**,
 with credit ("Gruvbox Clean by sabarinathan1611") and under the same licence.

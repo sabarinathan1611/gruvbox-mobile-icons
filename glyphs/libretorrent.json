@@ -1,0 +1,27 @@
+{
+  "name": "libretorrent",
+  "label": "LibreTorrent",
+  "packages": [
+    "org.proninyaroslav.libretorrent"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "fill",
+      "color": "accent",
+      "d": "M4 3.5 H8.5 V6 H4 Z",
+      "soft": true
+    },
+    {
+      "type": "fill",
+      "color": "accent",
+      "d": "M15.5 3.5 H20 V6 H15.5 Z",
+      "soft": true
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M4 8.6 V12 A8 8 0 0 0 20 12 V8.6 H15.5 V12 A3.5 3.5 0 0 1 8.5 12 V8.6 Z"
+    }
+  ]
+}

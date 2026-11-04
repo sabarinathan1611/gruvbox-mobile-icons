@@ -1,0 +1,30 @@
+{
+  "name": "fdroid",
+  "label": "F-Droid",
+  "packages": [
+    "org.fdroid.fdroid"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "fill",
+      "color": "accent",
+      "d": "M12 3 L20 7.5 L12 12 L4 7.5 Z"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M12 3 L20 7.5 V16.5 L12 21 L4 16.5 V7.5 Z"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M4 7.5 L12 12 L20 7.5"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M12 12 V21"
+    }
+  ]
+}

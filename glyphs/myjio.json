@@ -1,0 +1,25 @@
+{
+  "name": "myjio",
+  "label": "MyJio",
+  "packages": [
+    "com.jio.myjio"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M6.5 3 H14.5 L19 7.5 V19.5 A1.5 1.5 0 0 1 17.5 21 H6.5 A1.5 1.5 0 0 1 5 19.5 V4.5 A1.5 1.5 0 0 1 6.5 3 Z"
+    },
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M9.7 11 H14.3 A1.2 1.2 0 0 1 15.5 12.2 V16.3 A1.2 1.2 0 0 1 14.3 17.5 H9.7 A1.2 1.2 0 0 1 8.5 16.3 V12.2 A1.2 1.2 0 0 1 9.7 11 Z"
+    },
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M12 11 V17.5"
+    }
+  ]
+}

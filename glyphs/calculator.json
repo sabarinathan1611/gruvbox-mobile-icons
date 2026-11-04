@@ -1,0 +1,60 @@
+{
+  "name": "calculator",
+  "label": "Calculator",
+  "packages": [
+    "com.vivo.calculator"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M7 2.5 H17 A2.5 2.5 0 0 1 19.5 5 V19 A2.5 2.5 0 0 1 17 21.5 H7 A2.5 2.5 0 0 1 4.5 19 V5 A2.5 2.5 0 0 1 7 2.5 Z"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M8 6.5 H16"
+    },
+    {
+      "type": "fill",
+      "color": "fg",
+      "d": "M7.45 11.5 a1.05 1.05 0 1 0 2.1 0 a1.05 1.05 0 1 0 -2.1 0 Z"
+    },
+    {
+      "type": "fill",
+      "color": "fg",
+      "d": "M10.95 11.5 a1.05 1.05 0 1 0 2.1 0 a1.05 1.05 0 1 0 -2.1 0 Z"
+    },
+    {
+      "type": "fill",
+      "color": "fg",
+      "d": "M14.45 11.5 a1.05 1.05 0 1 0 2.1 0 a1.05 1.05 0 1 0 -2.1 0 Z"
+    },
+    {
+      "type": "fill",
+      "color": "fg",
+      "d": "M7.45 14.75 a1.05 1.05 0 1 0 2.1 0 a1.05 1.05 0 1 0 -2.1 0 Z"
+    },
+    {
+      "type": "fill",
+      "color": "fg",
+      "d": "M10.95 14.75 a1.05 1.05 0 1 0 2.1 0 a1.05 1.05 0 1 0 -2.1 0 Z"
+    },
+    {
+      "type": "fill",
+      "color": "fg",
+      "d": "M7.45 18 a1.05 1.05 0 1 0 2.1 0 a1.05 1.05 0 1 0 -2.1 0 Z"
+    },
+    {
+      "type": "fill",
+      "color": "fg",
+      "d": "M10.95 18 a1.05 1.05 0 1 0 2.1 0 a1.05 1.05 0 1 0 -2.1 0 Z"
+    },
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M15.5 14.75 V18"
+    }
+  ]
+}

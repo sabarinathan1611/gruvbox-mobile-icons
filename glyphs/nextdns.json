@@ -1,0 +1,46 @@
+{
+  "name": "nextdns",
+  "label": "NextDNS Manager",
+  "packages": [
+    "com.doubleangels.nextdnsmanagement"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M12 12.5 L5.5 5.5"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M12 12.5 L18.5 5.5"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M12 12.5 V20"
+    },
+    {
+      "type": "ring",
+      "color": "fg",
+      "d": "M3.5 5.5 a2 2 0 1 0 4 0 a2 2 0 1 0 -4 0 Z"
+    },
+    {
+      "type": "ring",
+      "color": "fg",
+      "d": "M16.5 5.5 a2 2 0 1 0 4 0 a2 2 0 1 0 -4 0 Z"
+    },
+    {
+      "type": "ring",
+      "color": "fg",
+      "d": "M10 20 a2 2 0 1 0 4 0 a2 2 0 1 0 -4 0 Z"
+    },
+    {
+      "type": "fill",
+      "color": "accent",
+      "d": "M9.6 12.5 a2.4 2.4 0 1 0 4.8 0 a2.4 2.4 0 1 0 -4.8 0 Z",
+      "soft": true
+    }
+  ]
+}

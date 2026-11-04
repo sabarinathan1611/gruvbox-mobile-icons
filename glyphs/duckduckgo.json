@@ -1,0 +1,26 @@
+{
+  "name": "duckduckgo",
+  "label": "DuckDuckGo",
+  "packages": [
+    "com.duckduckgo.mobile.android"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M4 10.5 a6.5 6.5 0 1 0 13 0 a6.5 6.5 0 1 0 -13 0 Z"
+    },
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M15.3 15.3 L20.5 20.5"
+    },
+    {
+      "type": "fill",
+      "color": "accent",
+      "d": "M8.9 10.5 a1.6 1.6 0 1 0 3.2 0 a1.6 1.6 0 1 0 -3.2 0 Z",
+      "soft": true
+    }
+  ]
+}

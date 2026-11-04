@@ -1,0 +1,26 @@
+{
+  "name": "simpmusic",
+  "label": "SimpMusic",
+  "packages": [
+    "com.maxrave.simpmusic"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "fill",
+      "color": "accent",
+      "d": "M6.4 17.5 a2.6 2.6 0 1 0 5.2 0 a2.6 2.6 0 1 0 -5.2 0 Z",
+      "soft": true
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M12 17.5 V4"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M12 4 C14.5 4.5 18 6 18 9.5"
+    }
+  ]
+}

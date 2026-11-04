@@ -1,0 +1,30 @@
+{
+  "name": "gpay",
+  "label": "Google Pay",
+  "packages": [
+    "com.google.android.apps.nbu.paisa.user"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M3 12 a9 9 0 1 0 18 0 a9 9 0 1 0 -18 0 Z"
+    },
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M8.5 7.5 H15.5"
+    },
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M8.5 10.5 H15.5"
+    },
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M11 7.5 C15 7.5 15 13.5 11 13.5 H8.5 L14 17.5"
+    }
+  ]
+}

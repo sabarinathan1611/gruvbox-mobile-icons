@@ -1,0 +1,25 @@
+{
+  "name": "angelone",
+  "label": "Angel One",
+  "packages": [
+    "com.msf.angelmobile"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M3 3.5 V20.5 H21"
+    },
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M6.5 15.5 L10.5 11.5 L13.5 14 L19.5 7.5"
+    },
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M19.45 10.5 L19.5 7.5 L16.51 7.76"
+    }
+  ]
+}

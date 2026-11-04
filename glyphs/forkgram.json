@@ -1,0 +1,25 @@
+{
+  "name": "forkgram",
+  "label": "Forkgram",
+  "packages": [
+    "org.forkgram.classic"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "fill",
+      "color": "fg",
+      "d": "M10 13.5 L13.5 20.5 L21 3.5 Z"
+    },
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M21 3.5 L3 10.5 L10 13.5 L13.5 20.5 Z"
+    },
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M21 3.5 L10 13.5"
+    }
+  ]
+}

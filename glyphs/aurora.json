@@ -1,0 +1,30 @@
+{
+  "name": "aurora",
+  "label": "Aurora Store",
+  "packages": [
+    "com.aurora.store"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M5 8 H19 L18 20.5 H6 Z"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M9 8 V6.5 A3 3 0 0 1 15 6.5 V8"
+    },
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M12 11 V17"
+    },
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M9.99 14.77 L12 17 L14.01 14.77"
+    }
+  ]
+}

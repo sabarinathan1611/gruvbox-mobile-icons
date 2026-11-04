@@ -55,22 +55,56 @@ Or copy the APK to the phone and open it. Then apply the pack from your launcher
 [README](../README.md#apply-in-nova-launcher)). Launchers cache icons, so after an update switch
 the icon pack away and back again to see new icons.
 
-## Versioning
+## Releases (CI/CD)
 
-Bump `VERSION_CODE` (an integer that must always go up) and `VERSION_NAME` at the top of
-`scripts/build_iconpack.py` for every release, then re-run it and rebuild.
+Two GitHub Actions workflows run in `.github/workflows/`:
 
-## Signing
+| Workflow | Runs on | What it does |
+|---|---|---|
+| `ci.yml` | every push and pull request | validates icons (format, size, content), checks file types, verifies the Gradle wrapper, scans with ClamAV, renders the icons, builds a debug APK (downloadable artifact); on `main` it also commits the regenerated icons |
+| `release.yml` | a `v1.2.3` tag, or **Run workflow** in the Actions tab | runs all of `ci.yml`, **waits for approval**, builds a signed release APK, scans it with ClamAV and publishes a GitHub release with the APK, its SHA-256 and the wallpapers |
 
-`assembleDebug` signs with the Android **debug key** of the machine that built it. Android only
-installs an update over an existing install when both are signed with the same key. So:
+To release:
 
-- If you install a build from a different machine (or from GitHub Releases), uninstall the old
-  copy first.
-- For a store release, create your own release keystore with `keytool`, keep it **out of git**
-  (`*.jks` and `*.keystore` are already ignored), add a `signingConfigs` block to
-  `iconpack/app/build.gradle.kts` that reads its passwords from environment variables, and run
-  `gradlew assembleRelease`.
+```bash
+git tag v0.3.0
+git push origin v0.3.0
+```
+
+Then open the run in the **Actions** tab and click **Review deployments → Approve**. The version
+name comes from the tag, and the version code is `major*10000 + minor*100 + patch`.
+
+### One-time setup: the approval gate
+
+GitHub → repository **Settings → Environments → New environment** → name it `release` → tick
+**Required reviewers** and add yourself. Until this exists, releases publish without waiting.
+
+### One-time setup: the signing key
+
+Android only installs an update over an existing install when both are signed with the **same
+key**. Without a release key, CI signs each release with a throwaway key, and users have to
+uninstall before every update. Create your key once and keep it safe; if you lose it, you can
+never update the app under the same signature.
+
+```bash
+keytool -genkeypair -v -keystore gruvbox-release.jks -alias gruvbox -keyalg RSA -keysize 4096 -validity 10000
+```
+
+Store it as repository secrets (`*.jks` is git-ignored; never commit it):
+
+```bash
+# macOS / Linux
+base64 -w0 gruvbox-release.jks | gh secret set ICONPACK_KEYSTORE_BASE64
+# Windows PowerShell
+[Convert]::ToBase64String([IO.File]::ReadAllBytes("gruvbox-release.jks")) | gh secret set ICONPACK_KEYSTORE_BASE64
+
+gh secret set ICONPACK_KEYSTORE_PASSWORD
+gh secret set ICONPACK_KEY_ALIAS --body gruvbox
+gh secret set ICONPACK_KEY_PASSWORD
+```
+
+Local builds keep using the debug key; `ICONPACK_VERSION_NAME`, `ICONPACK_VERSION_CODE` and the
+`ICONPACK_KEYSTORE*` variables override the defaults in `scripts/build_iconpack.py` when set.
 
 ## What the generator produces
 
@@ -89,6 +123,6 @@ current theme-designer documentation first.
 
 - Theme packages usually name icon images by app package; `mapping/components.txt` lists the
   package of every icon.
-- Change `SIZE` in `scripts/make_icons.py` to render other sizes. If vivo applies its own icon
+- Change `SIZE` in `scripts/glyph_store.py` to render other sizes. If vivo applies its own icon
   mask, render a tile-less variant (only the glyph group from `svg_for`).
 - Wallpapers are already at the native 1080 × 2392.

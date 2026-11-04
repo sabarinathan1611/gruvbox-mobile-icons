@@ -1,0 +1,20 @@
+{
+  "name": "iqoocloud",
+  "label": "iQOO Cloud",
+  "packages": [
+    "com.bbk.cloud"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M7 18.5 A4.5 4.5 0 0 1 6.3 9.6 A6 6 0 0 1 17.7 8.6 A5 5 0 0 1 17 18.5 Z"
+    },
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M9 13.8 L11.2 16 L15 12.2"
+    }
+  ]
+}

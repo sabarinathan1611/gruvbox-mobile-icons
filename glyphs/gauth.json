@@ -1,0 +1,30 @@
+{
+  "name": "gauth",
+  "label": "Google Auth",
+  "packages": [
+    "com.google.android.apps.authenticator2"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M4 13 a8 8 0 1 0 16 0 a8 8 0 1 0 -16 0 Z"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M10 2.5 H14"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M12 2.5 V5"
+    },
+    {
+      "type": "fill",
+      "color": "accent",
+      "d": "M12 13 V8.5 A4.5 4.5 0 0 1 16.5 13 Z"
+    }
+  ]
+}

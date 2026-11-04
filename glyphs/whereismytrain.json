@@ -1,0 +1,42 @@
+{
+  "name": "whereismytrain",
+  "label": "Where Is My Train",
+  "packages": [
+    "com.whereismytrain.android"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M8 3 H16 A3 3 0 0 1 19 6 V14 A3 3 0 0 1 16 17 H8 A3 3 0 0 1 5 14 V6 A3 3 0 0 1 8 3 Z"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M8.5 6 H15.5 A1 1 0 0 1 16.5 7 V9 A1 1 0 0 1 15.5 10 H8.5 A1 1 0 0 1 7.5 9 V7 A1 1 0 0 1 8.5 6 Z"
+    },
+    {
+      "type": "fill",
+      "color": "accent",
+      "d": "M7.6 13.5 a1.2 1.2 0 1 0 2.4 0 a1.2 1.2 0 1 0 -2.4 0 Z",
+      "soft": true
+    },
+    {
+      "type": "fill",
+      "color": "accent",
+      "d": "M14 13.5 a1.2 1.2 0 1 0 2.4 0 a1.2 1.2 0 1 0 -2.4 0 Z",
+      "soft": true
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M8.5 17 L6.5 21"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M15.5 17 L17.5 21"
+    }
+  ]
+}

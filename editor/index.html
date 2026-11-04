@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gruvbox Icon Studio</title>
+  <meta name="description" content="Draw and edit Gruvbox Clean icons, then export them for the icon pack.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5.3' fill='%233c3836'/%3E%3Cpath d='M7 12h10M12 7v10' stroke='%23fe8019' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-name">Icon Studio</span>
+      <span class="brand-sub">Gruvbox Clean</span>
+    </div>
+
+    <div class="doc-fields">
+      <input id="f-label" class="field field-title" placeholder="App name" autocomplete="off" spellcheck="false" aria-label="App name">
+      <span class="dirty-dot" id="dirty-dot" title="Unsaved changes since last export"></span>
+    </div>
+
+    <div class="top-actions">
+      <button class="icon-btn" id="btn-undo" title="Undo (Ctrl+Z)" aria-label="Undo">
+        <svg viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg>
+      </button>
+      <button class="icon-btn" id="btn-redo" title="Redo (Ctrl+Shift+Z)" aria-label="Redo">
+        <svg viewBox="0 0 24 24"><path d="m15 14 5-5-5-5"/><path d="M20 9H9.5a5.5 5.5 0 0 0 0 11H13"/></svg>
+      </button>
+      <span class="sep"></span>
+      <button class="btn" id="btn-new" title="New icon (N)">New</button>
+      <button class="btn" id="btn-open" title="Open a glyph .json file">Open</button>
+      <input type="file" id="file-open" accept=".json,application/json" hidden>
+      <div class="menu">
+        <button class="btn btn-primary" id="btn-export" aria-haspopup="true" aria-expanded="false">
+          Export
+          <svg class="chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="menu-pop" id="export-menu" role="menu">
+          <button role="menuitem" data-export="json"><b>Glyph JSON</b><small>for the repo: drop into glyphs/</small></button>
+          <button role="menuitem" data-export="copy"><b>Copy JSON</b><small>to the clipboard</small></button>
+          <hr>
+          <button role="menuitem" data-export="svg"><b>SVG</b><small>with your palette</small></button>
+          <button role="menuitem" data-export="png192"><b>PNG 192 px</b><small>launcher size</small></button>
+          <button role="menuitem" data-export="png512"><b>PNG 512 px</b><small>store / sharing</small></button>
+        </div>
+      </div>
+      <button class="icon-btn" id="btn-help" title="Shortcuts and workflow (?)" aria-label="Help">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.3"/><path d="M12 17h.01"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <!-- Library -->
+    <aside class="panel library" id="library">
+      <div class="panel-head">
+        <h2>Library</h2>
+        <span class="count" id="lib-count"></span>
+      </div>
+      <label class="search">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+        <input id="lib-search" type="search" placeholder="Search icons" autocomplete="off" spellcheck="false">
+      </label>
+      <div class="lib-grid" id="lib-grid"></div>
+    </aside>
+
+    <!-- Stage -->
+    <section class="stage">
+      <div class="toolbar" role="toolbar" aria-label="Tools">
+        <button class="tool active" data-tool="select" title="Select and move (V)">
+          <svg viewBox="0 0 24 24"><path d="M6 3.5 18 12l-5.5 1.2L15.8 19l-2.6 1.4-3.2-5.8L6 18.5Z"/></svg><kbd>V</kbd>
+        </button>
+        <button class="tool" data-tool="line" title="Line (L)">
+          <svg viewBox="0 0 24 24"><path d="M5 19 19 5"/></svg><kbd>L</kbd>
+        </button>
+        <button class="tool" data-tool="poly" title="Polyline: click points, double-click or Enter to finish (P)">
+          <svg viewBox="0 0 24 24"><path d="M4 18 9 7l6 9 5-11"/></svg><kbd>P</kbd>
+        </button>
+        <button class="tool" data-tool="rect" title="Rounded rectangle (R)">
+          <svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="3.5"/></svg><kbd>R</kbd>
+        </button>
+        <button class="tool" data-tool="circle" title="Circle (C)">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg><kbd>C</kbd>
+        </button>
+        <span class="tool-sep"></span>
+        <div class="brush" title="Colour and fill for new shapes">
+          <button class="swatch-btn active" data-brush="fg" aria-label="Cream"></button>
+          <button class="swatch-btn" data-brush="accent" aria-label="Accent"></button>
+          <button class="tool small" id="brush-fill" title="New shapes are filled (F)">
+            <svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="3" class="fillable"/></svg>
+          </button>
+        </div>
+        <span class="tool-sep"></span>
+        <button class="tool small toggle active" id="t-grid" title="Grid (G)">
+          <svg viewBox="0 0 24 24"><path d="M4 9h16M4 15h16M9 4v16M15 4v16"/></svg>
+        </button>
+        <button class="tool small toggle active" id="t-snap" title="Snap to half units (S); hold Alt to move freely">
+          <svg viewBox="0 0 24 24"><path d="M6 4v7a6 6 0 0 0 12 0V4"/><path d="M6 8h3M15 8h3"/></svg>
+        </button>
+      </div>
+
+      <div class="canvas-wrap" id="canvas-wrap">
+        <svg id="canvas" viewBox="-1.5 -1.5 27 27" aria-label="Icon canvas">
+          <rect x="0" y="0" width="24" height="24" rx="1.2" class="board" id="board"/>
+          <g id="grid" class="grid"></g>
+          <g id="content" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></g>
+          <g id="hits"></g>
+          <g id="overlay"></g>
+          <g id="draft" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></g>
+        </svg>
+        <div class="empty-hint" id="empty-hint">
+          <p><b>Start drawing</b> with a tool on the left, or pick an icon from the library to edit it.</p>
+          <p class="muted">Keep shapes inside the dashed square. One orange accent per icon.</p>
+        </div>
+      </div>
+
+      <div class="statusbar">
+        <span id="st-pos" class="mono">x –  y –</span>
+        <span id="st-hint" class="hint"></span>
+        <button class="chip" id="st-valid" title="Show checks"></button>
+      </div>
+    </section>
+
+    <!-- Inspector -->
+    <aside class="panel inspector" id="inspector">
+      <section class="card" id="card-element">
+        <h3>Element</h3>
+        <div id="element-panel"></div>
+      </section>
+
+      <section class="card">
+        <h3>Layers <span class="count" id="layer-count"></span></h3>
+        <ol class="layers" id="layers"></ol>
+      </section>
+
+      <section class="card" id="card-preview">
+        <h3>Preview</h3>
+        <div class="preview" id="preview"></div>
+      </section>
+
+      <section class="card" id="card-palette">
+        <h3>Palette <button class="link" id="pal-reset">Reset</button></h3>
+        <div class="presets" id="presets"></div>
+        <div class="slots" id="slots"></div>
+        <div class="gruvbox-swatches" id="gruvbox-swatches"></div>
+        <p class="note">The pack itself always uses the Gruvbox palette. Your colours apply to the canvas, previews and SVG / PNG downloads.</p>
+      </section>
+
+      <section class="card" id="card-app">
+        <h3>App mapping</h3>
+        <label class="row">Icon name
+          <input id="f-name" class="field mono" placeholder="auto from app name" autocomplete="off" spellcheck="false">
+        </label>
+        <label class="row">Packages <small>one per line</small>
+          <textarea id="f-packages" class="field mono" rows="2" placeholder="com.example.app" spellcheck="false"></textarea>
+        </label>
+        <label class="row">Launcher components <small>optional, pkg/Activity</small>
+          <textarea id="f-components" class="field mono" rows="2" placeholder="com.example.app/com.example.app.MainActivity" spellcheck="false"></textarea>
+        </label>
+        <label class="row">Author
+          <input id="f-author" class="field" placeholder="your GitHub name" autocomplete="off" spellcheck="false">
+        </label>
+        <ul class="checks" id="checks"></ul>
+      </section>
+    </aside>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <dialog class="modal" id="confirm">
+    <form method="dialog">
+      <p id="confirm-msg"></p>
+      <div class="modal-actions">
+        <button class="btn" value="cancel">Cancel</button>
+        <button class="btn btn-primary" value="ok" id="confirm-ok">Continue</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="modal modal-wide" id="help">
+    <form method="dialog">
+      <h2>Icon Studio</h2>
+      <div class="help-cols">
+        <div>
+          <h4>Workflow</h4>
+          <ol class="steps">
+            <li>Draw a new icon, or open one from the library to edit it.</li>
+            <li>Fill in the app name and package under <b>App mapping</b>.</li>
+            <li>Fix anything red in the checks.</li>
+            <li><b>Export → Glyph JSON</b> and put the file in <code>glyphs/</code>.</li>
+            <li>Push or open a pull request. CI validates it, scans it for malware, renders the icon and builds the APK. A release goes out after approval.</li>
+          </ol>
+          <h4>Style</h4>
+          <ul class="tight">
+            <li>24 × 24 grid, shapes inside the dashed square</li>
+            <li>2-unit round strokes, flat colours</li>
+            <li>Cream lines, one orange accent</li>
+            <li>Draw what the app does, never its logo</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Shortcuts</h4>
+          <table class="keys">
+            <tr><td><kbd>V</kbd></td><td>Select / move</td></tr>
+            <tr><td><kbd>L</kbd> <kbd>P</kbd> <kbd>R</kbd> <kbd>C</kbd></td><td>Line, polyline, rectangle, circle</td></tr>
+            <tr><td><kbd>Enter</kbd> / double-click</td><td>Finish polyline</td></tr>
+            <tr><td><kbd>Esc</kbd></td><td>Cancel / deselect</td></tr>
+            <tr><td><kbd>Arrows</kbd></td><td>Nudge (Shift: ×4)</td></tr>
+            <tr><td><kbd>Alt</kbd> + drag</td><td>Move without snapping</td></tr>
+            <tr><td><kbd>Del</kbd></td><td>Delete element</td></tr>
+            <tr><td><kbd>Ctrl</kbd> <kbd>D</kbd></td><td>Duplicate</td></tr>
+            <tr><td><kbd>[</kbd> <kbd>]</kbd></td><td>Move down / up a layer</td></tr>
+            <tr><td><kbd>X</kbd></td><td>Swap cream / orange</td></tr>
+            <tr><td><kbd>F</kbd></td><td>Fill new shapes</td></tr>
+            <tr><td><kbd>G</kbd> <kbd>S</kbd></td><td>Grid, snapping</td></tr>
+            <tr><td><kbd>Ctrl</kbd> <kbd>Z</kbd> / <kbd>Shift</kbd></td><td>Undo / redo</td></tr>
+            <tr><td><kbd>Ctrl</kbd> <kbd>E</kbd></td><td>Export glyph JSON</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="modal-actions"><button class="btn btn-primary" value="ok">Got it</button></div>
+    </form>
+  </dialog>
+
+  <script src="library.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -18,20 +18,15 @@ Open an issue titled `Icon request: <App name>` with:
 ## Add an icon yourself
 
 1. Fork the repo and create a branch, for example `icon/obsidian`.
-2. Follow [how-to-make-icons.md](how-to-make-icons.md): add the glyph to `scripts/glyphs.py`
-   and the app to `scripts/apps.py`.
-3. If you have the phone connected, run `python scripts/build_mapping.py` so the app's
-   components are added to `mapping/components.txt`. The script only adds rows, never removes them.
-4. Regenerate:
+2. Draw the icon in **Icon Studio** (`editor/index.html`, see
+   [how-to-make-icons.md](how-to-make-icons.md)) and **Export → Glyph JSON**.
+3. Add the file to `glyphs/` and commit **only that file**. CI renders the SVG and PNG icons,
+   the previews and the APK; on `main` the generated files are committed automatically.
+4. Open a pull request with a screenshot or **Export → PNG** of your icon. The checks must be
+   green: icon validation, security scan and APK build.
 
-   ```bash
-   python scripts/make_icons.py
-   python scripts/build_iconpack.py
-   ```
-
-5. Commit the code **and** the generated files (`icons/`, `preview/icons_sheet.png`,
-   `mapping/components.txt`, `iconpack/app/src/main/`), so the APK builds straight from the repo.
-6. Open a pull request. Include a crop of your icon from `preview/icons_sheet.png`.
+If you have adb, you can also run `python scripts/build_mapping.py` to add your phone's launcher
+components to `mapping/components.txt` (read-only; it only adds rows).
 
 ## Style rules (PRs that break these will be asked to change)
 
@@ -39,8 +34,10 @@ Open an issue titled `Icon request: <App name>` with:
 - Cream `#ebdbb2` lines and **one** orange `#fe8019` accent; flat, with no gradients or shadows.
 - **No brand logos or lookalikes.** Draw the app's function, not its logo. This keeps the pack
   original and safe to distribute.
-- No stock images, fonts or traced artwork: everything is drawn with the helpers in `glyphs.py`.
-- Never hand-edit generated PNG, SVG or XML files; change the scripts and re-run them.
+- No stock images, fonts or traced artwork: every icon is plain path data in a glyph JSON file.
+- Never hand-edit generated PNG, SVG or XML files; change the glyph or the scripts instead.
+- Pull requests may only add or change files in `glyphs/` unless an issue agreed otherwise. CI
+  rejects other file types in the icon folders and scans everything for malware.
 
 ## Never commit
 

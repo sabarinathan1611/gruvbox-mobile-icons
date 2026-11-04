@@ -1,0 +1,35 @@
+{
+  "name": "gold",
+  "label": "Gold",
+  "packages": [
+    "com.joyalukkas.mcstaging.twa"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M2.5 20.5 L4 15.5 H10.5 L12 20.5 Z"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M12 20.5 L13.5 15.5 H20 L21.5 20.5 Z"
+    },
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M7.25 13 L8.75 8 H15.25 L16.75 13 Z"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M18.5 2.8 V6.8"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M16.5 4.8 H20.5"
+    }
+  ]
+}

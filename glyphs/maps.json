@@ -1,0 +1,21 @@
+{
+  "name": "maps",
+  "label": "Maps",
+  "packages": [
+    "com.google.android.apps.maps"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M12 21 C12 21 5 14.5 5 9.5 A7 7 0 0 1 19 9.5 C19 14.5 12 21 12 21 Z"
+    },
+    {
+      "type": "fill",
+      "color": "accent",
+      "d": "M9.7 9.5 a2.3 2.3 0 1 0 4.6 0 a2.3 2.3 0 1 0 -4.6 0 Z",
+      "soft": true
+    }
+  ]
+}

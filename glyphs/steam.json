@@ -1,0 +1,37 @@
+{
+  "name": "steam",
+  "label": "Steam",
+  "packages": [
+    "com.valvesoftware.android.steam.community"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M7.5 6.5 H16.5 A5 5 0 0 1 21.4 12.5 L20.4 17 A2.6 2.6 0 0 1 15.9 18.2 L14 15.5 H10 L8.1 18.2 A2.6 2.6 0 0 1 3.6 17 L2.6 12.5 A5 5 0 0 1 7.5 6.5 Z"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M7.5 9.5 V13.5"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M5.5 11.5 H9.5"
+    },
+    {
+      "type": "fill",
+      "color": "accent",
+      "d": "M16.1 9.9 a1.1 1.1 0 1 0 2.2 0 a1.1 1.1 0 1 0 -2.2 0 Z",
+      "soft": true
+    },
+    {
+      "type": "fill",
+      "color": "accent",
+      "d": "M14.1 12.6 a1.1 1.1 0 1 0 2.2 0 a1.1 1.1 0 1 0 -2.2 0 Z",
+      "soft": true
+    }
+  ]
+}

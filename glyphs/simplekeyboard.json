@@ -1,0 +1,45 @@
+{
+  "name": "simplekeyboard",
+  "label": "Simple Keyboard",
+  "packages": [
+    "rkr.simplekeyboard.inputmethod"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M5 6 H19 A2.5 2.5 0 0 1 21.5 8.5 V15.5 A2.5 2.5 0 0 1 19 18 H5 A2.5 2.5 0 0 1 2.5 15.5 V8.5 A2.5 2.5 0 0 1 5 6 Z"
+    },
+    {
+      "type": "fill",
+      "color": "fg",
+      "d": "M5.9 9.6 a1.1 1.1 0 1 0 2.2 0 a1.1 1.1 0 1 0 -2.2 0 Z"
+    },
+    {
+      "type": "fill",
+      "color": "fg",
+      "d": "M10.9 9.6 a1.1 1.1 0 1 0 2.2 0 a1.1 1.1 0 1 0 -2.2 0 Z"
+    },
+    {
+      "type": "fill",
+      "color": "accent",
+      "d": "M15.9 9.6 a1.1 1.1 0 1 0 2.2 0 a1.1 1.1 0 1 0 -2.2 0 Z"
+    },
+    {
+      "type": "fill",
+      "color": "fg",
+      "d": "M8.4 12.4 a1.1 1.1 0 1 0 2.2 0 a1.1 1.1 0 1 0 -2.2 0 Z"
+    },
+    {
+      "type": "fill",
+      "color": "fg",
+      "d": "M13.4 12.4 a1.1 1.1 0 1 0 2.2 0 a1.1 1.1 0 1 0 -2.2 0 Z"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M8.5 15 H15.5"
+    }
+  ]
+}

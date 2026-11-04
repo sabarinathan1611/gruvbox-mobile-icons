@@ -1,0 +1,26 @@
+{
+  "name": "qbitcontroller",
+  "label": "qBit Controller",
+  "packages": [
+    "dev.bartuzen.qbitcontroller"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M4.64 18.25 A8.5 8.5 0 1 1 19.36 18.25"
+    },
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M12 14 L16.5 9"
+    },
+    {
+      "type": "fill",
+      "color": "fg",
+      "d": "M10.4 14 a1.6 1.6 0 1 0 3.2 0 a1.6 1.6 0 1 0 -3.2 0 Z",
+      "soft": true
+    }
+  ]
+}

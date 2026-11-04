@@ -1,0 +1,138 @@
+# Checks every push and pull request:
+#   1. validate   glyph JSON, SVG, PNG and wallpapers: format, size, dimensions, no active content
+#   2. security   ClamAV malware scan, file-type check, Gradle wrapper checksum
+#   3. build      render the icons, generate the pack, build the APK (artifact)
+# On main, the regenerated icons and previews are committed back so contributors only add glyphs/*.json.
+# The release workflow reuses this file through workflow_call.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  validate:
+    name: Validate icons
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Check format, size and content of every glyph, icon and wallpaper
+        run: python scripts/validate_icons.py
+
+  security:
+    name: Security scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify the Gradle wrapper checksum
+        uses: gradle/actions/wrapper-validation@v4
+
+      - name: Only images and JSON in the icon folders
+        run: |
+          # Catches renamed executables, archives and scripts by content, not by file extension
+          bad=$(find glyphs icons wallpapers -type f ! -name LICENSE -print0 \
+            | xargs -0 file --mime-type \
+            | grep -Ev ': +(application/json|text/plain|image/png|image/svg\+xml)$' || true)
+          if [ -n "$bad" ]; then
+            echo "::error::Unexpected file types in icon folders:"
+            echo "$bad"
+            exit 1
+          fi
+          echo "All files in glyphs/, icons/ and wallpapers/ are JSON, SVG or PNG."
+
+      - name: Install ClamAV and update virus definitions
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq clamav > /dev/null
+          sudo systemctl stop clamav-freshclam 2>/dev/null || true
+          for attempt in 1 2 3; do
+            sudo freshclam --quiet && break
+            echo "freshclam failed (attempt $attempt), retrying"
+            sleep 20
+          done
+          clamscan --version
+
+      - name: Scan the repository for malware (trojans, viruses, macros)
+        run: |
+          clamscan --recursive --infected --alert-broken --alert-macros \
+            --exclude-dir='^\./\.git$' --max-filesize=50M --max-scansize=200M .
+
+  build:
+    name: Build APK
+    needs: [validate, security]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # only used on main, to commit regenerated icons
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Render icons and generate the icon pack
+        run: |
+          python scripts/make_icons.py
+          python scripts/build_iconpack.py
+
+      - name: Build the APK
+        working-directory: iconpack
+        run: ./gradlew assembleDebug --no-daemon
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gruvbox-clean-debug-${{ github.sha }}
+          path: iconpack/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 14
+
+      - name: Report generated files that differ from the commit
+        run: |
+          changed=$(git status --porcelain -- icons preview editor/library.js iconpack/app/src/main)
+          if [ -n "$changed" ]; then
+            echo "### Regenerated files" >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+            echo "$changed" >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Commit regenerated icons
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          git add icons preview editor/library.js iconpack/app/src/main
+          if git diff --cached --quiet; then
+            echo "Generated files are already up to date."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Regenerate icons [skip ci]"
+          git push

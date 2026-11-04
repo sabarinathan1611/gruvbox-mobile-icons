@@ -1,0 +1,50 @@
+{
+  "name": "weather",
+  "label": "Weather",
+  "packages": [
+    "com.vivo.weather"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M4.68 12.32 L3.83 13.17"
+    },
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M3.1 8.5 L1.9 8.5"
+    },
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M4.68 4.68 L3.83 3.83"
+    },
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M8.5 3.1 L8.5 1.9"
+    },
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M12.32 4.68 L13.17 3.83"
+    },
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M13.9 8.5 L15.1 8.5"
+    },
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M5.3 8.5 a3.2 3.2 0 1 0 6.4 0 a3.2 3.2 0 1 0 -6.4 0 Z"
+    },
+    {
+      "type": "ring",
+      "color": "fg",
+      "d": "M10 20 A3 3 0 0 1 10 14 A4.5 4.5 0 0 1 18.5 13.5 A3.25 3.25 0 0 1 18 20 Z"
+    }
+  ]
+}

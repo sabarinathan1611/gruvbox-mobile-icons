@@ -1,0 +1,25 @@
+{
+  "name": "simpleview",
+  "label": "Simple View",
+  "packages": [
+    "com.vivo.simplelauncher"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M5.5 3 H18.5 A2.5 2.5 0 0 1 21 5.5 V8.5 A2.5 2.5 0 0 1 18.5 11 H5.5 A2.5 2.5 0 0 1 3 8.5 V5.5 A2.5 2.5 0 0 1 5.5 3 Z"
+    },
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M5.5 13 H8.5 A2.5 2.5 0 0 1 11 15.5 V18.5 A2.5 2.5 0 0 1 8.5 21 H5.5 A2.5 2.5 0 0 1 3 18.5 V15.5 A2.5 2.5 0 0 1 5.5 13 Z"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M15.5 13 H18.5 A2.5 2.5 0 0 1 21 15.5 V18.5 A2.5 2.5 0 0 1 18.5 21 H15.5 A2.5 2.5 0 0 1 13 18.5 V15.5 A2.5 2.5 0 0 1 15.5 13 Z"
+    }
+  ]
+}

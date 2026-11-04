@@ -1,0 +1,30 @@
+{
+  "name": "obtainium",
+  "label": "Obtainium",
+  "packages": [
+    "dev.imranr.obtainium.fdroid"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M17.46 5.49 A8.5 8.5 0 1 1 6.54 5.49"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M20.46 5.37 L17.46 5.49 L17.9 8.46"
+    },
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M12 8 V15"
+    },
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M10.13 12.92 L12 15 L13.87 12.92"
+    }
+  ]
+}

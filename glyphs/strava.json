@@ -1,0 +1,26 @@
+{
+  "name": "strava",
+  "label": "Strava",
+  "packages": [
+    "com.strava"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M4.5 18.5 C9 18.5 7 11.5 12 11.5 S15.5 5.5 19.5 5.5"
+    },
+    {
+      "type": "fill",
+      "color": "accent",
+      "d": "M2.5 18.5 a2 2 0 1 0 4 0 a2 2 0 1 0 -4 0 Z",
+      "soft": true
+    },
+    {
+      "type": "ring",
+      "color": "fg",
+      "d": "M17.5 5.5 a2 2 0 1 0 4 0 a2 2 0 1 0 -4 0 Z"
+    }
+  ]
+}

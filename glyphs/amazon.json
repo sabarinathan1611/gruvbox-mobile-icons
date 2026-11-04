@@ -1,0 +1,27 @@
+{
+  "name": "amazon",
+  "label": "Amazon",
+  "packages": [
+    "in.amazon.mShop.android.shopping"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M2.5 4 H5 L7.5 15.5 H18 L20.5 7.5 H6"
+    },
+    {
+      "type": "fill",
+      "color": "accent",
+      "d": "M7.5 19.5 a1.5 1.5 0 1 0 3 0 a1.5 1.5 0 1 0 -3 0 Z",
+      "soft": true
+    },
+    {
+      "type": "fill",
+      "color": "accent",
+      "d": "M15 19.5 a1.5 1.5 0 1 0 3 0 a1.5 1.5 0 1 0 -3 0 Z",
+      "soft": true
+    }
+  ]
+}

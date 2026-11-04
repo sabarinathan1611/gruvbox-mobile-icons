@@ -8,7 +8,7 @@ This covers:
   - wallpapers/                                  (wallpaper images)
   - preview/                                     (preview sheets)
   - iconpack/app/src/main/res/drawable-nodpi/    (the same icons, packaged)
-  - the glyph artwork defined in scripts/glyphs.py, and any image rendered from it
+  - glyphs/                                      (the glyph designs), and any image rendered from them
 
 Attribution: "Gruvbox Clean by sabarinathan1611,
 https://github.com/sabarinathan1611/gruvbox-mobile-icons"

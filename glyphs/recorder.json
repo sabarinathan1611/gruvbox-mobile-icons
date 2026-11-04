@@ -1,0 +1,25 @@
+{
+  "name": "recorder",
+  "label": "Recorder",
+  "packages": [
+    "com.vivo.soundrecorder"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M12 3 H12 A3 3 0 0 1 15 6 V11 A3 3 0 0 1 12 14 H12 A3 3 0 0 1 9 11 V6 A3 3 0 0 1 12 3 Z"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M5.5 11 A6.5 6.5 0 0 0 18.5 11"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M12 17.5 V21"
+    }
+  ]
+}

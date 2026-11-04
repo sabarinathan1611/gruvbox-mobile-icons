@@ -1,0 +1,122 @@
+# Release: run all CI checks, wait for approval, then build a signed APK and publish a GitHub release.
+#
+# Start it by pushing a tag (git tag v0.3.0 && git push origin v0.3.0) or from the Actions tab
+# ("Run workflow" with a version). The publish job uses the "release" environment; give that
+# environment a required reviewer so every release waits for your approval.
+#
+# Signing (recommended, so updates install over earlier releases), repository secrets:
+#   ICONPACK_KEYSTORE_BASE64   base64 of your release .jks
+#   ICONPACK_KEYSTORE_PASSWORD, ICONPACK_KEY_ALIAS, ICONPACK_KEY_PASSWORD
+# Without them the APK is signed with a one-off debug key and must be installed fresh.
+name: Release
+
+on:
+  push:
+    tags: ["v*.*.*"]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to release, e.g. 0.3.0"
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  checks:
+    name: Checks
+    uses: ./.github/workflows/ci.yml
+
+  publish:
+    name: Approve and publish
+    needs: checks
+    runs-on: ubuntu-latest
+    environment:
+      name: release
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Work out the version
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = "push" ]; then v="${GITHUB_REF_NAME#v}"; else v="${INPUT_VERSION#v}"; fi
+          if ! [[ "$v" =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; then
+            echo "::error::Version must look like 1.2.3, got '$v'"
+            exit 1
+          fi
+          code=$(( BASH_REMATCH[1] * 10000 + BASH_REMATCH[2] * 100 + BASH_REMATCH[3] ))
+          echo "VERSION=$v" >> "$GITHUB_ENV"
+          echo "ICONPACK_VERSION_NAME=$v" >> "$GITHUB_ENV"
+          echo "ICONPACK_VERSION_CODE=$code" >> "$GITHUB_ENV"
+          echo "Releasing v$v (versionCode $code)"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Render icons and generate the icon pack
+        run: |
+          python scripts/make_icons.py
+          python scripts/build_iconpack.py
+
+      - name: Prepare the signing key
+        env:
+          KEYSTORE_BASE64: ${{ secrets.ICONPACK_KEYSTORE_BASE64 }}
+        run: |
+          if [ -n "$KEYSTORE_BASE64" ]; then
+            echo "$KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/release.jks"
+            echo "ICONPACK_KEYSTORE=$RUNNER_TEMP/release.jks" >> "$GITHUB_ENV"
+            echo "Signing with the release key."
+          else
+            echo "::warning::ICONPACK_KEYSTORE_BASE64 is not set: this APK is signed with a one-off debug key."
+          fi
+
+      - name: Build the release APK
+        working-directory: iconpack
+        env:
+          ICONPACK_KEYSTORE_PASSWORD: ${{ secrets.ICONPACK_KEYSTORE_PASSWORD }}
+          ICONPACK_KEY_ALIAS: ${{ secrets.ICONPACK_KEY_ALIAS }}
+          ICONPACK_KEY_PASSWORD: ${{ secrets.ICONPACK_KEY_PASSWORD }}
+        run: |
+          ./gradlew assembleRelease --no-daemon
+          mkdir -p "$RUNNER_TEMP/out"
+          cp app/build/outputs/apk/release/app-release.apk "$RUNNER_TEMP/out/gruvbox-clean-v$VERSION.apk"
+          rm -f "$RUNNER_TEMP/release.jks"
+
+      - name: Scan the APK for malware
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq clamav > /dev/null
+          sudo systemctl stop clamav-freshclam 2>/dev/null || true
+          for attempt in 1 2 3; do sudo freshclam --quiet && break; sleep 20; done
+          clamscan --infected --alert-broken "$RUNNER_TEMP/out/gruvbox-clean-v$VERSION.apk"
+
+      - name: Publish the GitHub release
+        run: |
+          cd "$RUNNER_TEMP/out"
+          sha256sum "gruvbox-clean-v$VERSION.apk" > "gruvbox-clean-v$VERSION.apk.sha256"
+          cd "$GITHUB_WORKSPACE"
+          gh release create "v$VERSION" \
+            "$RUNNER_TEMP/out/gruvbox-clean-v$VERSION.apk" \
+            "$RUNNER_TEMP/out/gruvbox-clean-v$VERSION.apk.sha256" \
+            wallpapers/gruvbox_clean_*.png \
+            --target "$GITHUB_SHA" \
+            --title "Gruvbox Clean v$VERSION" \
+            --generate-notes

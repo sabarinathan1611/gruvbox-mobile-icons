@@ -1,0 +1,22 @@
+{
+  "name": "vlc",
+  "label": "VLC",
+  "packages": [
+    "org.videolan.vlc",
+    "com.android.VideoPlayer"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M3 12 a9 9 0 1 0 18 0 a9 9 0 1 0 -18 0 Z"
+    },
+    {
+      "type": "fill",
+      "color": "accent",
+      "d": "M10 8 L16 12 L10 16 Z",
+      "soft": true
+    }
+  ]
+}

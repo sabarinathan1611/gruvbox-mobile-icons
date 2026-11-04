@@ -1,0 +1,33 @@
+{
+  "name": "whatsapp",
+  "label": "WhatsApp",
+  "packages": [
+    "com.whatsapp"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M4.49 14.99 A8.5 8.5 0 1 1 8.82 18.88 L3.22 19.47 Z"
+    },
+    {
+      "type": "fill",
+      "color": "accent",
+      "d": "M7.4 11 a1.1 1.1 0 1 0 2.2 0 a1.1 1.1 0 1 0 -2.2 0 Z",
+      "soft": true
+    },
+    {
+      "type": "fill",
+      "color": "accent",
+      "d": "M10.9 11 a1.1 1.1 0 1 0 2.2 0 a1.1 1.1 0 1 0 -2.2 0 Z",
+      "soft": true
+    },
+    {
+      "type": "fill",
+      "color": "accent",
+      "d": "M14.4 11 a1.1 1.1 0 1 0 2.2 0 a1.1 1.1 0 1 0 -2.2 0 Z",
+      "soft": true
+    }
+  ]
+}

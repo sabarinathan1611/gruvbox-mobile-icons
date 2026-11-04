@@ -1,117 +1,116 @@
 # How to make an icon
 
-Every icon is drawn in code (`scripts/glyphs.py`), placed on the shared tile and rendered to SVG
-and PNG by a script. Don't edit the PNGs or SVGs by hand: change the code and re-run it.
+Every icon is one small JSON file in [`glyphs/`](../glyphs). You can make it in **Icon Studio**
+(no install, runs in your browser) or by hand. CI turns the file into the SVG and PNG icons
+and puts it in the APK, so you don't need Python or Android tools to add an icon.
 
-## 0. One-time setup
+## Option A: Icon Studio (recommended)
 
-Python 3.11+ is required.
+1. Open [`editor/index.html`](../editor/index.html) in a browser. Double-clicking the file works;
+   no server is needed.
+2. Click an icon in the **Library** to edit it, or press **New** to start from scratch.
+3. Draw with the tools on the left:
 
-```bash
-python -m venv .venv
-# Windows
-.venv\Scripts\pip install -r requirements.txt
-# macOS / Linux
-.venv/bin/pip install -r requirements.txt
-```
+   | Tool | Key | How |
+   |---|---|---|
+   | Select / move | `V` | click a shape, drag it; drag the round handles to reshape it |
+   | Line | `L` | drag |
+   | Polyline | `P` | click points; double-click or `Enter` to finish; click the first point to close it |
+   | Rounded rectangle | `R` | drag; set the corner radius in the Element panel |
+   | Circle | `C` | drag out from the centre |
 
-The examples below use `python`; replace it with `.venv\Scripts\python.exe` (Windows) or
-`.venv/bin/python` (macOS / Linux).
+   Below the tools, pick cream or orange for new shapes, and whether new shapes are filled.
+   `X` swaps the selected shape's colour, arrow keys nudge, `Ctrl+D` duplicates, `[` and `]` change
+   the layer order, and `Ctrl+Z` undoes. Press `?` for the full list.
+4. In the **Element** panel, choose how a shape is drawn: **Stroke** (2-unit line), **Fill**,
+   **Ring** (outline filled with the tile colour) or **Cut-out** (a tile-coloured gap that separates
+   overlapping shapes). You can also type or paste path data there.
+5. Fill in **App mapping**: the app name (the icon name is derived from it), the package name, and
+   optionally exact launcher components.
+6. When the checks show **Ready to export**, choose **Export → Glyph JSON**.
+7. Put the downloaded `<name>.json` in `glyphs/` and push it, or open a pull request.
+   See [What happens after you push](#what-happens-after-you-push).
 
-## 1. Find the app's launcher component
+Work is saved in the browser automatically, so closing the tab doesn't lose it.
 
-An icon pack matches apps by **launcher component** (`package/activity`), not just the package name.
+### Palette
 
-**With the phone connected over adb (recommended).** Enable USB debugging, then run:
+The **Palette** card has presets (Gruvbox, Aqua, Yellow, Blue, Purple, Light) and lets you change
+every colour: tile, lines, accent and the preview wallpaper. Click a slot to make it active, then
+click a Gruvbox swatch, use the colour picker, or type a hex value.
 
-```bash
-python scripts/build_mapping.py
-```
+Custom colours apply to the canvas, the previews and the **SVG / PNG downloads**, so you can make
+your own colour variants. The icon pack in this repo always uses the Gruvbox palette, so the
+glyph JSON stores roles (`fg` / `accent`), never colours.
 
-This only reads from the phone. It adds every launcher component it finds to
-`mapping/components.txt` (it never removes rows, so mappings from other phones stay).
-A `-` in the second column means the app has no custom icon yet.
+## Find the app's package and launcher component
 
-**Single app by hand:**
+Icons are matched to apps by package name, which you can find in the app's Play Store or F-Droid
+URL. Some apps also need an exact **launcher component** (`package/activity`):
 
 ```bash
 adb shell cmd package resolve-activity --brief -a android.intent.action.MAIN -c android.intent.category.LAUNCHER com.example.app
 ```
 
-## 2. Draw the glyph
+With the phone connected, `python scripts/build_mapping.py` records every launcher component on
+the phone in `mapping/components.txt`. It is read-only, and it only ever adds rows.
 
-Open `scripts/glyphs.py` and add an entry to the `GLYPHS` dict:
+## The glyph format
 
-```python
-"obsidian": [  # notes vault
-    fg(rrect(5, 3, 14, 18, 2.5)),               # page outline
-    fg("M8.5 8 H15.5"), fg("M8.5 11.5 H15.5"),  # text lines
-    acc("M8.5 15 H12.5"),                       # the one orange accent
-],
+```json
+{
+  "name": "vlc",
+  "label": "VLC",
+  "packages": ["org.videolan.vlc"],
+  "components": ["org.videolan.vlc/org.videolan.vlc.StartActivity"],
+  "author": "your-github-name",
+  "elements": [
+    { "type": "stroke", "color": "fg", "d": "M3 12 A9 9 0 1 0 21 12 A9 9 0 1 0 3 12 Z" },
+    { "type": "fill", "color": "accent", "d": "M10 8 L16 12 L10 16 Z", "soft": true }
+  ]
+}
 ```
 
-### Drawing rules
-
-- **Grid:** 24 × 24 units. Keep all content inside **2..22**. The tile and padding are added for you.
-- **Stroke:** 2 units with round caps and joins (the default). Don't change the width.
-- **Colours:** cream `#ebdbb2` for the main shape, plus **one** orange `#fe8019` accent element.
-- **Flat:** no gradients, shadows or opacity.
-- **Original:** draw what the app *does* (cart, plane, gamepad); never trace or imitate a brand logo.
-- **Paths only:** every helper emits `<path>`, so icons convert cleanly to Android vectors.
-
-### Helpers
-
-| Helper | Draws |
+| Key | Meaning |
 |---|---|
-| `fg(d)` / `acc(d)` | stroke in cream / orange |
-| `fill_fg(d)` / `fill_acc(d)` | solid cream / orange shape (`soft=False` for sharp edges) |
-| `ring(d, color)` | shape filled with the tile colour and outlined, for knobs and nodes that sit on lines |
-| `knock(d, width)` | tile-coloured cut-out, to separate overlapping shapes |
-| `circle(cx, cy, r)` | circle path |
-| `rrect(x, y, w, h, r)` | rounded rectangle path |
-| `arc(cx, cy, r, a0, a1)` | clockwise arc; angles in degrees, 0 = right, 90 = down |
-| `chevron(x, y, dx, dy, size)` | arrowhead with its tip at (x, y) pointing along (dx, dy) |
-| `star(cx, cy, R)`, `gear(...)` | star and gear outlines |
-| `bubble_rect(...)`, `bubble_round(...)` | speech bubbles with tails |
+| `name` | drawable name: lowercase letters, digits and `_`; must match the file name |
+| `label` | app name shown in the icon picker and search |
+| `packages` | every launcher icon of these packages gets this icon |
+| `components` | optional exact `package/activity` entries |
+| `elements` | shapes drawn in order on a 24 × 24 grid with a 2-unit round stroke |
 
-`d` is ordinary SVG path data (`M L H V C A Z`). Elements are drawn in list order, so
-put `knock`/`ring` shapes after anything they should cover.
+Element `type`: `stroke`, `fill` (optional `"soft": true` rounds the edges), `ring`, or `knock`
+(a cut-out with a `"width"` margin of 0–8). `color` is `fg` (cream) or `accent` (orange).
+`d` is ordinary SVG path data (`M L H V C S Q T A Z`). Icon Studio may add a `shape` object to
+remember rectangles and circles; it is optional.
 
-## 3. Map the icon to the app
+## Rules (CI enforces the first four)
 
-Add a line to `APPS` in `scripts/apps.py`:
+- Content stays inside the 24 × 24 grid; aim for the dashed 2..22 square.
+- At most 40 shapes, files up to 16 KB, path data only (no scripts, links or embedded images).
+- A package can belong to only one icon.
+- The name must be unique and must not be a Java keyword.
+- One orange accent element, flat colours, and a 2-unit stroke.
+- **Never copy a brand logo.** Draw what the app does.
 
-```python
-"obsidian": ("Obsidian", ["md.obsidian"]),
-```
+## What happens after you push
 
-- The key is the drawable name: lowercase letters, digits and `_`, and not a Java keyword.
-- Listing the package maps **every** launcher component of that package, including alternate-icon aliases.
-- When one package has several launcher icons with different jobs, list the exact component
-  instead: `"com.android.contacts/com.android.dialer.TwelveKeyDialer"`.
+1. **Validate**: every glyph, SVG, PNG and wallpaper is checked for format, size, dimensions and
+   active content (`scripts/validate_icons.py`).
+2. **Security scan**: files in the icon folders must really be JSON, SVG or PNG, the Gradle wrapper
+   checksum is verified, and ClamAV scans the whole repository for malware.
+3. **Build**: the icons are rendered, the pack is generated and the APK is built (downloadable
+   from the workflow run).
+4. On `main`, the regenerated icons and previews are committed back automatically.
+5. **Release**: when a version tag is pushed, the same checks run, the release **waits for
+   approval**, and then a signed APK is published. See [build-apk.md](build-apk.md#releases-cicd).
 
-## 4. Render and check
-
-```bash
-python scripts/make_icons.py
-```
-
-This writes `icons/svg/<name>.svg`, `icons/png/<name>.png` (192 × 192) and refreshes
-`preview/icons_sheet.png`, where every icon is shown at real launcher size (132 px) on the wallpaper.
-Check yours there. If it looks busy at that size, remove detail.
-
-## 5. Put it in the APK
+## Working locally (optional)
 
 ```bash
-python scripts/build_iconpack.py
+python -m venv .venv
+.venv/bin/pip install -r requirements.txt      # Windows: .venv\Scripts\pip ...
+python scripts/validate_icons.py               # the same checks as CI
+python scripts/make_icons.py                   # icons/, preview/icons_sheet.png, editor/library.js
+python scripts/build_iconpack.py               # Android resources in iconpack/
 ```
-
-Then build and install as described in [build-apk.md](build-apk.md).
-
-## Checklist
-
-- [ ] Content stays inside 2..22 and uses the 2-unit stroke
-- [ ] Exactly one orange accent element
-- [ ] Reads clearly at launcher size in `preview/icons_sheet.png`
-- [ ] Doesn't look like the app's brand logo
-- [ ] Added to `GLYPHS` and `APPS`, and the scripts were re-run

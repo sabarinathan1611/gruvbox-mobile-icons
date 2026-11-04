@@ -1,0 +1,25 @@
+{
+  "name": "filemanager",
+  "label": "File Manager",
+  "packages": [
+    "org.fossify.filemanager"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M3 7 A2 2 0 0 1 5 5 H9.5 L11.5 7.5 H19 A2 2 0 0 1 21 9.5 V17.5 A2 2 0 0 1 19 19.5 H5 A2 2 0 0 1 3 17.5 Z"
+    },
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M7.5 12.5 H16.5"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M7.5 15.5 H13"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "name": "browser",
+  "label": "Browser",
+  "packages": [
+    "com.vivo.browser",
+    "com.iqoo.website"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M3 12 a9 9 0 1 0 18 0 a9 9 0 1 0 -18 0 Z"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M12 3 C7.5 7 7.5 17 12 21 C16.5 17 16.5 7 12 3"
+    },
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M3 12 H21"
+    }
+  ]
+}

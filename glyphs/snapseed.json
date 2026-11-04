@@ -1,0 +1,41 @@
+{
+  "name": "snapseed",
+  "label": "Snapseed",
+  "packages": [
+    "com.niksoftware.snapseed"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M4 7 H20"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M4 12 H20"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M4 17 H20"
+    },
+    {
+      "type": "ring",
+      "color": "fg",
+      "d": "M7 7 a2 2 0 1 0 4 0 a2 2 0 1 0 -4 0 Z"
+    },
+    {
+      "type": "fill",
+      "color": "accent",
+      "d": "M12.8 12 a2.2 2.2 0 1 0 4.4 0 a2.2 2.2 0 1 0 -4.4 0 Z",
+      "soft": true
+    },
+    {
+      "type": "ring",
+      "color": "fg",
+      "d": "M5.5 17 a2 2 0 1 0 4 0 a2 2 0 1 0 -4 0 Z"
+    }
+  ]
+}

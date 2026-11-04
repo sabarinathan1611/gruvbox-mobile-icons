@@ -1,0 +1,25 @@
+{
+  "name": "zepto",
+  "label": "Zepto",
+  "packages": [
+    "com.zeptoconsumerapp"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M14.5 2.5 L7.5 13 H12.5 L11 21.5 L19 10.5 H13.5 Z"
+    },
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M2.5 9 H6"
+    },
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M3.5 14.5 H6"
+    }
+  ]
+}

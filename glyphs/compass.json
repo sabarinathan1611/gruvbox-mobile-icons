@@ -1,0 +1,27 @@
+{
+  "name": "compass",
+  "label": "Compass",
+  "packages": [
+    "com.vivo.compass"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M3 12 a9 9 0 1 0 18 0 a9 9 0 1 0 -18 0 Z"
+    },
+    {
+      "type": "fill",
+      "color": "accent",
+      "d": "M12 5.5 L14.3 12 H9.7 Z",
+      "soft": true
+    },
+    {
+      "type": "fill",
+      "color": "fg",
+      "d": "M9.7 12 L12 18.5 L14.3 12 Z",
+      "soft": true
+    }
+  ]
+}

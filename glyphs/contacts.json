@@ -1,0 +1,20 @@
+{
+  "name": "contacts",
+  "label": "Contacts",
+  "components": [
+    "com.android.contacts/com.android.contacts.DialtactsContactsEntryActivity"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M8.2 8.5 a3.8 3.8 0 1 0 7.6 0 a3.8 3.8 0 1 0 -7.6 0 Z"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M4.5 20.5 A7.5 7.5 0 0 1 19.5 20.5"
+    }
+  ]
+}

@@ -68,6 +68,9 @@ APP_BUILD = f"""plugins {{
     id("com.android.application")
 }}
 
+// CI sets these; local builds fall back to the defaults below and the debug key
+val keystoreFile: String? = System.getenv("ICONPACK_KEYSTORE")
+
 android {{
     namespace = "{PACKAGE}"
     compileSdk = {COMPILE_SDK}
@@ -76,8 +79,19 @@ android {{
         applicationId = "{PACKAGE}"
         minSdk = {MIN_SDK}
         targetSdk = {COMPILE_SDK}
-        versionCode = {VERSION_CODE}
-        versionName = "{VERSION_NAME}"
+        versionCode = System.getenv("ICONPACK_VERSION_CODE")?.toInt() ?: {VERSION_CODE}
+        versionName = System.getenv("ICONPACK_VERSION_NAME") ?: "{VERSION_NAME}"
+    }}
+
+    signingConfigs {{
+        if (keystoreFile != null) {{
+            create("release") {{
+                storeFile = file(keystoreFile)
+                storePassword = System.getenv("ICONPACK_KEYSTORE_PASSWORD")
+                keyAlias = System.getenv("ICONPACK_KEY_ALIAS")
+                keyPassword = System.getenv("ICONPACK_KEY_PASSWORD")
+            }}
+        }}
     }}
 
     buildTypes {{
@@ -85,6 +99,7 @@ android {{
             // Icons are looked up by name from XML, so the shrinker must not touch resources
             isMinifyEnabled = false
             isShrinkResources = false
+            signingConfig = signingConfigs.getByName(if (keystoreFile != null) "release" else "debug")
         }}
     }}
 
@@ -339,6 +354,10 @@ def read_components() -> list[tuple[str, str]]:
         # Resolve against apps.py now, so edits there apply without re-querying the phone
         if drawable := owner_of(component):
             rows.append((component, drawable))
+    # Exact components named in glyph files count even if no phone has reported them yet
+    known = {c for c, _ in rows}
+    for drawable, (_, targets) in APPS.items():
+        rows += [(t, drawable) for t in targets if "/" in t and t not in known]
     return rows
 
 

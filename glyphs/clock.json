@@ -1,0 +1,25 @@
+{
+  "name": "clock",
+  "label": "Clock",
+  "packages": [
+    "com.android.deskclock"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M3 12 a9 9 0 1 0 18 0 a9 9 0 1 0 -18 0 Z"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M12 7 V12"
+    },
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M12 12 L15.5 14"
+    }
+  ]
+}

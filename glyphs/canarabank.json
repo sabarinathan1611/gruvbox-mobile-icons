@@ -1,0 +1,40 @@
+{
+  "name": "canarabank",
+  "label": "Canara Bank",
+  "packages": [
+    "com.canarabank.mobility"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M3 9 L12 3.5 L21 9 Z"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M6 12 V17"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M10 12 V17"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M14 12 V17"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M18 12 V17"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M3 20.5 H21"
+    }
+  ]
+}

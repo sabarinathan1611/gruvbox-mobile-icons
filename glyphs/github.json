@@ -1,0 +1,35 @@
+{
+  "name": "github",
+  "label": "GitHub",
+  "packages": [
+    "com.github.android"
+  ],
+  "author": "sabarinathan1611",
+  "elements": [
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M6 7 V17"
+    },
+    {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M18 9 C18 14 6 12.5 6 17"
+    },
+    {
+      "type": "ring",
+      "color": "fg",
+      "d": "M4 5 a2 2 0 1 0 4 0 a2 2 0 1 0 -4 0 Z"
+    },
+    {
+      "type": "ring",
+      "color": "fg",
+      "d": "M4 19 a2 2 0 1 0 4 0 a2 2 0 1 0 -4 0 Z"
+    },
+    {
+      "type": "ring",
+      "color": "accent",
+      "d": "M16 7 a2 2 0 1 0 4 0 a2 2 0 1 0 -4 0 Z"
+    }
+  ]
+}
