@@ -113,10 +113,12 @@ jobs:
           cd "$RUNNER_TEMP/out"
           sha256sum "gruvbox-clean-v$VERSION.apk" > "gruvbox-clean-v$VERSION.apk.sha256"
           cd "$GITHUB_WORKSPACE"
+          shopt -s nullglob
+          wallpapers=(wallpapers/*.png)   # whatever wallpapers the repo has (may be none)
           gh release create "v$VERSION" \
             "$RUNNER_TEMP/out/gruvbox-clean-v$VERSION.apk" \
             "$RUNNER_TEMP/out/gruvbox-clean-v$VERSION.apk.sha256" \
-            wallpapers/gruvbox_clean_*.png \
+            "${wallpapers[@]}" \
             --target "$GITHUB_SHA" \
             --title "Gruvbox Clean v$VERSION" \
             --generate-notes

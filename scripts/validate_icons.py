@@ -21,12 +21,16 @@ ROOT = Path(__file__).resolve().parent.parent
 GITHUB = os.environ.get("GITHUB_ACTIONS") == "true"
 
 PNG_MAGIC = b"\x89PNG\r\n\x1a\n"
-LIMITS = {  # folder: (allowed suffixes, max bytes per file, required PNG size or None)
+PHONE = "phone"  # any portrait phone-screen size, see PHONE_SCREEN
+LIMITS = {  # folder: (allowed suffixes, max bytes per file, required PNG size, PHONE or None)
     "glyphs": ({".json"}, MAX_FILE_BYTES, None),
     "icons/svg": ({".svg"}, 32 * 1024, None),
     "icons/png": ({".png"}, 64 * 1024, (192, 192)),
-    "wallpapers": ({".png"}, 4 * 1024 * 1024, (1080, 2392)),
+    "wallpapers": ({".png"}, 8 * 1024 * 1024, PHONE),
 }
+# Wallpapers: portrait, from small phones (720 px wide) to the tallest flagships (1600 x 3840),
+# with a height:width ratio between 16:10 (1.6) and 24:10 (2.4) to cover 16:9 up to 21:9 screens.
+PHONE_SCREEN = {"min_w": 720, "max_w": 1600, "max_h": 3840, "min_ratio": 1.6, "max_ratio": 2.4}
 ALWAYS_OK = {"LICENSE", "README.md", ".gitkeep"}
 SVG_NS = "{http://www.w3.org/2000/svg}"
 SVG_TAGS = {"svg", "g", "path"}
@@ -80,12 +84,26 @@ def check_png(path: Path, size):
         with Image.open(path) as im:
             im.verify()
         with Image.open(path) as im:
-            if size and im.size != size:
+            if size == PHONE:
+                check_phone_screen(path, *im.size)
+            elif size and im.size != size:
                 report("error", path, f"must be {size[0]}x{size[1]} px, got {im.size[0]}x{im.size[1]}")
             if path.parent.name == "png" and im.mode != "RGBA":
                 report("error", path, f"icons must be RGBA, got {im.mode}")
     except Exception as e:  # noqa: BLE001 - any decoder failure means a broken or hostile file
         report("error", path, f"PNG does not decode ({e})")
+
+
+def check_phone_screen(path: Path, w: int, h: int):
+    s = PHONE_SCREEN
+    got = f"got {w}x{h}"
+    if h <= w:
+        report("error", path, f"wallpapers must be portrait (taller than wide), {got}")
+    elif not s["min_w"] <= w <= s["max_w"] or h > s["max_h"]:
+        report("error", path, f"must be {s['min_w']}-{s['max_w']} px wide and at most {s['max_h']} px tall, {got}")
+    elif not s["min_ratio"] <= h / w <= s["max_ratio"]:
+        report("error", path, f"height:width must be {s['min_ratio']}-{s['max_ratio']} "
+                              f"(a phone screen shape), {got} = {h / w:.2f}")
 
 
 def check_glyph(path: Path, packages_seen: dict):
