@@ -7,24 +7,92 @@
   "author": "sabarinathan1611",
   "elements": [
     {
+      "type": "stroke",
+      "color": "fg",
+      "d": "M6.52 12.09 H16.79 V21.17 H6.52 Z",
+      "width": 1.5,
+      "shape": {
+        "kind": "rect",
+        "x": 6.52,
+        "y": 12.09,
+        "w": 10.27,
+        "h": 9.08,
+        "r": 0
+      }
+    },
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M8.64 8.31 L7.01 3.71"
+    },
+    {
+      "type": "stroke",
+      "color": "accent",
+      "d": "M14.7 8.18 L16.12 3.63"
+    },
+    {
       "type": "fill",
       "color": "accent",
-      "d": "M12 3 L20 7.5 L12 12 L4 7.5 Z"
+      "d": "M5.84 5.97 H17.49 V10.72 H5.84 Z",
+      "shape": {
+        "kind": "rect",
+        "x": 5.84,
+        "y": 5.97,
+        "w": 11.65,
+        "h": 4.75,
+        "r": 0
+      }
+    },
+    {
+      "type": "fill",
+      "color": "fg",
+      "d": "M13.29 8.26 A1.5 1.5 0 1 0 16.29 8.26 A1.5 1.5 0 1 0 13.29 8.26 Z",
+      "shape": {
+        "kind": "circle",
+        "cx": 14.79,
+        "cy": 8.26,
+        "r": 1.5
+      }
+    },
+    {
+      "type": "fill",
+      "color": "fg",
+      "d": "M7.19 8.26 A1.5 1.5 0 1 0 10.19 8.26 A1.5 1.5 0 1 0 7.19 8.26 Z",
+      "shape": {
+        "kind": "circle",
+        "cx": 8.69,
+        "cy": 8.26,
+        "r": 1.5
+      }
     },
     {
       "type": "stroke",
-      "color": "fg",
-      "d": "M12 3 L20 7.5 V16.5 L12 21 L4 16.5 V7.5 Z"
+      "color": "blue",
+      "d": "M8.95 16.48 A2.97 2.97 0 1 0 14.89 16.48 A2.97 2.97 0 1 0 8.95 16.48 Z",
+      "width": 0.5,
+      "shape": {
+        "kind": "circle",
+        "cx": 11.92,
+        "cy": 16.48,
+        "r": 2.97
+      }
     },
     {
-      "type": "stroke",
-      "color": "fg",
-      "d": "M4 7.5 L12 12 L20 7.5"
+      "type": "fill",
+      "color": "accent",
+      "d": "M10.4 16.4 A1.44 1.44 0 1 0 13.28 16.4 A1.44 1.44 0 1 0 10.4 16.4 Z",
+      "shape": {
+        "kind": "circle",
+        "cx": 11.84,
+        "cy": 16.4,
+        "r": 1.44
+      }
     },
     {
-      "type": "stroke",
-      "color": "fg",
-      "d": "M12 12 V21"
+      "type": "fill",
+      "color": "gray",
+      "d": "M10.66 16.38 L11.90 16.38",
+      "soft": true
     }
   ]
 }
